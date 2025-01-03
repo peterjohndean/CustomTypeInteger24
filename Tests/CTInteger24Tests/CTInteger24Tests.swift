@@ -26,4 +26,11 @@ import Foundation
     
     let b2: UInt24 = 4321
     print(b2)
+    
+    // ExpressibleByFloatLiteral
+    let a3: Int24 = 123.456
+    print(a3)
+    
+    let b3: UInt24 = 432.123
+    print(b3)
 }
