@@ -8,7 +8,7 @@ I will try to incorporate it in my future posts.
 ## 1. Objectives
 
 1. Understand how to implement a custom type in Swift.
-2. Initially we will have the basics, to just hold the value and initialize it.
+2. Initially we will have the basics, to just hold/retrieve the value and initialize it.
 3. Later we will add more functionality to it.
 
 ## 2. Introduction

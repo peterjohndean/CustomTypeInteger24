@@ -1,6 +1,22 @@
 import Testing
+import Foundation
+
 @testable import CTInteger24
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@Test func initialise_tests() async throws {
+    
+    var a = Int24()
+    print(a)
+    
+    a = Int24((UInt24.max + 1) / 2 - 1)
+    print(a)
+    
+    var b = UInt24(1234)
+    print(b)
+    
+    b = UInt24((Int24.max + 1) / 2 - 1)
+    print(b)
+    
+    print(type(of: a))
+    print(type(of: b))
 }
