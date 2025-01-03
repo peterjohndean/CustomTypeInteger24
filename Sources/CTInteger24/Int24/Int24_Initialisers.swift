@@ -5,7 +5,12 @@
 //  Created by Peter Dean on 4/1/2025.
 //
 
-extension Int24 {
+extension Int24: ExpressibleByIntegerLiteral {
+    // MARK: Initialisers for literal types
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(value)    // let a: Int24 = 123456
+    }
+
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ value: T) {
         precondition(

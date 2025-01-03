@@ -19,4 +19,11 @@ import Foundation
     
     print(type(of: a))
     print(type(of: b))
+    
+    // ExpressibleByIntegerLiteral
+    let a2: Int24 = 1234
+    print(a2)
+    
+    let b2: UInt24 = 4321
+    print(b2)
 }
