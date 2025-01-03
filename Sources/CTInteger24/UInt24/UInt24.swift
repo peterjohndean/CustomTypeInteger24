@@ -19,6 +19,7 @@ public struct UInt24 {
         }
     }
     
+    // TODO: These will need to eventually become public static var min: Self to be compliant.
     // Define our bitMasks
     public static var bit24Mask: UInt32 { 0x00FF_FFFF }
     

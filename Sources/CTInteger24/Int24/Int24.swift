@@ -20,6 +20,7 @@ public struct Int24 {
         }
     }
     
+    // TODO: These will need to eventually become public static var min: Self to be compliant.
     // Define our bitMasks
     public static var bit24Mask: Int32 { 0x00FF_FFFF }
     public static var bit24MaskSigned: Int32 { 0x0080_0000 }
