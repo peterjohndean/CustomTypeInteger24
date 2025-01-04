@@ -31,3 +31,6 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 
 ### v0.0.4 - Added protocol Numeric
 - The minimum required enhancements were to include the multiplication operators `*` and `*=`, the method `init?(exactly)`, and the variable `magnitude`.
+
+### v0.0.5 - Added protocol BinaryInteger
+- Adhering to this protocol proved to be a complex task. I anticipate the necessity of further refinements, as I have already identified several issues.

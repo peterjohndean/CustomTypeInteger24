@@ -20,7 +20,7 @@
 @frozen
 public struct Int24 {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
-    private var _value: Int32 = 0
+    internal var _value: Int32 = 0
     
     public internal(set) var value: Int32 {
         get {
@@ -40,13 +40,5 @@ public struct Int24 {
     // Define our min/max values
     public static let minInt: Int32 = -8_388_608    // 2^23
     public static let maxInt: Int32 = 8_388_607     // 2^23 - 1
-
-    // Default initialisers
-    public init() {
-        _value = 0
-    }
     
-    public init(_ value: Self) {
-        _value = value._value
-    }
 }

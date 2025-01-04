@@ -25,8 +25,8 @@ extension Int24: Numeric {
     }
     
     public init?<T>(exactly source: T) where T : BinaryInteger {
-        guard value >= Int24.minInt && value <= Int24.maxInt else { return nil }
-        self.value = Int32(value)
+        guard source >= Int24.minInt && value <= Int24.maxInt else { return nil }
+        self.value = Int32(source)
     }
 
     public static func * (lhs: Self, rhs: Self) -> Self {

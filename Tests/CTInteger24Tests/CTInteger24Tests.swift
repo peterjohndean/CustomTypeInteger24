@@ -130,4 +130,49 @@ func numeric_tests() async throws {
     
     b1 = b1 * 2
     #expect(b1 == 12)
+    
+    a1 = -101
+    #expect(a1.magnitude == 101)
+    
+    b1 = 101
+    #expect(b1.magnitude == 101)
+}
+
+@Test("BinaryInteger")
+func binaryInteger_tests() async throws {
+    let a1: Int24 = 10
+    let a2: Int24 = 11
+    let a3: Int24 = Int24(clamping: Int32.min)
+    
+    #expect(a3 == -8388608)
+    #expect(a1 & a2 == 10)
+    #expect(a1 | a2 == 11)
+    #expect(a1 ^ a2 == 1)
+    #expect(a1 % a2 == 10)
+    #expect(a1 / a2 == 0)
+    #expect(a1 << 1 == 20)
+    #expect(a1 >> 1 == 5)
+    #expect(~a1 == -11)
+    
+    #expect(Int24(8).trailingZeroBitCount == 3)
+    #expect(Int24(Int24.minInt).trailingZeroBitCount == 23)
+    #expect(Int24().trailingZeroBitCount == 24)
+    
+    let b1: UInt24 = 10
+    let b2: UInt24 = 11
+    let b3: UInt24 = UInt24(clamping: UInt32.max)
+    
+    #expect(b3 == 16777215)
+    #expect(b1 & b2 == 10)
+    #expect(b1 | b2 == 11)
+    #expect(b1 ^ b2 == 1)
+    #expect(b1 % b2 == 10)
+    #expect(b1 / b2 == 0)
+    #expect(b1 << 1 == 20)
+    #expect(b1 >> 1 == 5)
+    #expect(~b1 == 16777205)
+    
+    #expect(UInt24(8).trailingZeroBitCount == 3)
+    #expect(UInt24(UInt24.maxInt).trailingZeroBitCount == 0)
+    #expect(UInt24().trailingZeroBitCount == 24)
 }

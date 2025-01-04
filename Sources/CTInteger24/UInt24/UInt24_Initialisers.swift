@@ -18,27 +18,32 @@
  */
 
 extension UInt24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
-    // MARK: Initialisers for literal types
-    public init(integerLiteral value: IntegerLiteralType) {
-        self.init(value)    // let a: UInt24 = 123456
+    // MARK: Default
+    public init(_ source: Self) {
+        _value = source._value
     }
     
-    public init(floatLiteral value: FloatLiteralType) {
-        self.init(value)    // let a: UInt24 = 123.456
+    // MARK: Initialisers for literal types
+    public init(integerLiteral source: IntegerLiteralType) {
+        self.init(source)    // let a: UInt24 = 123456
+    }
+    
+    public init(floatLiteral source: FloatLiteralType) {
+        self.init(source)    // let a: UInt24 = 123.456
     }
     
     // MARK: Initialisers for FixedWidthInteger
-    public init<T: FixedWidthInteger>(_ value: T) {
+    public init<T: FixedWidthInteger>(_ source: T) {
         precondition(
-            value >= UInt24.minInt && value <= UInt24.maxInt,
-            "\(value) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
+            source >= UInt24.minInt && source <= UInt24.maxInt,
+            "\(source) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
         )
-        self.value = UInt32(value)
+        self.value = UInt32(source)
     }
     
     // MARK: Initialisers for BinaryFloatingPoint
-    public init<T: BinaryFloatingPoint>(_ value: T) {
-        let roundedValue = UInt32(value.rounded())
+    public init<T: BinaryFloatingPoint>(_ source: T) {
+        let roundedValue = UInt32(source.rounded())
         precondition(
             roundedValue >= UInt24.minInt && roundedValue <= UInt24.maxInt,
             "\(roundedValue) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
