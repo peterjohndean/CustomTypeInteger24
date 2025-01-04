@@ -9,7 +9,7 @@ I’m not a computer scientist or a pro programmer, but I’m a hobbyist who lov
 ## Objectives
 1. To develop a fully interactive custom integer data type in Swift, while simultaneously enhancing my existing knowledge in the field.
 2. To progressively enhance the software’s functionality, ultimately leading to our desired outcome.
-3. To achieve this goal, I will require assistance. To date, my only coding companion has been ChatGPT and GitHub Copilot.
+3. To achieve this goal, it will require a learning curve. To date, my only coding companions have been ChatGPT and GitHub Copilot.
 
 ## Introduction
 I will initially creating structured pairs, Int24 and UInt24, leading to a usable library package with the aim to provides some basics like initialise, set, get and provide a description string that will make the values look a little better than the default.
