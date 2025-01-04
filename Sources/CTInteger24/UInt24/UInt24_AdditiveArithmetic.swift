@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension Int24: AdditiveArithmetic {
+extension UInt24: AdditiveArithmetic {
     public static func - (lhs: Self, rhs: Self) -> Self {
         return Self(lhs.value - rhs.value)
     }

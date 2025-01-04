@@ -22,5 +22,9 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 ### v0.0.2 - Added protocol Comparable
 - The minimum required syntax is to include `==` and `<` operators. 
 - These operators, along with `>`, `>=`, `<=`, and `!=`, are automatically included.
-- While this syntax enables us to work with literals, it does not allow operands to interact with other data types.
-- We will need to include these additional operators in the next version.
+- Although this syntax facilitates the manipulation of literals, it does not permit operands to interact with other data types. 
+- To achieve this, we must adhere to the protocol BinaryInteger.
+
+### v0.0.3 - Added protocol AdditiveArithmetic
+- The minimum required was to add the addition (`+`) and subtraction (`-`) operators.
+- Additionally, the operators `+=` and `-=` are automatically included, along with the variable zero.
