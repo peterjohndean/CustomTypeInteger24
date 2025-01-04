@@ -30,8 +30,8 @@ extension UInt24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ value: T) {
         precondition(
-            value >= UInt24.min && value <= UInt24.max,
-            "\(value) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
+            value >= UInt24.minInt && value <= UInt24.maxInt,
+            "\(value) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
         )
         self.value = UInt32(value)
     }
@@ -40,8 +40,8 @@ extension UInt24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     public init<T: BinaryFloatingPoint>(_ value: T) {
         let roundedValue = UInt32(value.rounded())
         precondition(
-            roundedValue >= UInt24.min && roundedValue <= UInt24.max,
-            "\(roundedValue) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
+            roundedValue >= UInt24.minInt && roundedValue <= UInt24.maxInt,
+            "\(roundedValue) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
         )
         self.value = roundedValue
     }

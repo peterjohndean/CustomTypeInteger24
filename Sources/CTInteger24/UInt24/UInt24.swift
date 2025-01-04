@@ -36,7 +36,15 @@ public struct UInt24 {
     public static var bit24Mask: UInt32 { 0x00FF_FFFF }
     
     // Define our min/max values
-    public static var min: UInt32 { 0 }            // 0
-    public static var max: UInt32 { 16_777_215 }   // 2^24 - 1
+    public static let minInt: UInt32 = 0            // 0
+    public static let maxInt: UInt32 = 16_777_215   // 2^24 - 1
 
+    // Default initialisers
+    public init() {
+        _value = 0
+    }
+    
+    public init(_ value: Self) {
+        _value = value._value
+    }
 }

@@ -25,20 +25,28 @@ public struct Int24 {
     public internal(set) var value: Int32 {
         get {
             // Ensure the returned Int32 is properly representing our value
-            return (self._value & Int24.bit24MaskSigned != 0) ? (self._value | ~Int24.bit24Mask) : self._value
+            return (_value & Int24.signedMaskInt != 0) ? (_value | ~Int24.maskInt) : _value
         }
         set {
-            self._value = newValue & Int24.bit24Mask
+            _value = newValue & Int24.maskInt
         }
     }
     
     // TODO: These will need to eventually become public static var min: Self to be compliant.
     // Define our bitMasks
-    public static var bit24Mask: Int32 { 0x00FF_FFFF }
-    public static var bit24MaskSigned: Int32 { 0x0080_0000 }
+    public static var maskInt: Int32 { 0x00FF_FFFF }
+    public static var signedMaskInt: Int32 { 0x0080_0000 }
     
     // Define our min/max values
-    public static var min: Int32 { -8_388_608 }     // 2^23
-    public static var max: Int32 { 8_388_607 }      // 2^23 - 1
+    public static let minInt: Int32 = -8_388_608    // 2^23
+    public static let maxInt: Int32 = 8_388_607     // 2^23 - 1
 
+    // Default initialisers
+    public init() {
+        _value = 0
+    }
+    
+    public init(_ value: Self) {
+        _value = value._value
+    }
 }

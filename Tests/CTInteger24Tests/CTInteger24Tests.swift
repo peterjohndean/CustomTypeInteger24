@@ -7,20 +7,20 @@ import Foundation
 func initialise_tests() async throws {
     // Note: Before protocol Comparable
     #expect(Int24().value == 0)
-    #expect(Int24((UInt24.max + 1) / 2 - 1).value == 8388607)
+    #expect(Int24((UInt24.maxInt + 1) / 2 - 1).value == 8388607)
     
     #expect(UInt24().value == 0)
-    #expect(UInt24((Int24.max + 1) / 2 - 1).value == 4194303)
+    #expect(UInt24((Int24.maxInt + 1) / 2 - 1).value == 4194303)
     
     var a = Int24()
     print(a)
-    a = Int24((UInt24.max + 1) / 2 - 1)
+    a = Int24((UInt24.maxInt + 1) / 2 - 1)
     print(a)
     
     var b = UInt24(1234)
     print(b)
     
-    b = UInt24((Int24.max + 1) / 2 - 1)
+    b = UInt24((Int24.maxInt + 1) / 2 - 1)
     print(b)
     
     #expect(a.description == "\(a)")
