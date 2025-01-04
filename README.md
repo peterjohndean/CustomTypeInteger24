@@ -1,18 +1,21 @@
-#  Custom Type Int24/UInt24
+#  Custom Type Integer Int24/UInt24
 
-## 0. Preface
-I am not a computer scientist, nor am I a professional programmer. I am just a hobbyist who likes to learn programming.
-I am writing this post to share my learning with others. I am open to feedback and suggestions. Please feel free to provide your feedback.
-I will try to incorporate it in my future posts.
+## License
+GNU GPLv3 or later.
 
-## 1. Objectives
+## Preface
+I’m not a computer scientist or a pro programmer, but I’m a hobbyist who loves learning about programming and different techniques. I’m writing this post to share my learning journey with others, and I’d love to hear your thoughts and suggestions. Feel free to give me any feedback you have, and I’ll try to incorporate it into my future posts.
 
-1. Understand how to implement a custom type in Swift.
-2. Initially we will have the basics, to just hold/retrieve the value and initialize it.
-3. Later we will add more functionality to it.
+## Objectives
+1. To develop a fully interactive custom integer data type in Swift, while simultaneously enhancing my existing knowledge in the field.
+2. To progressively enhance the software’s functionality, ultimately leading to our desired outcome.
+3. To achieve this goal, I will require assistance. To date, my only coding companion has been ChatGPT and GitHub Copilot.
 
-## 2. Introduction
-In this post, we will learn how to create a custom type in Swift. We will create a custom type called `Int24` and `UInt24`. 
-These types will be able to hold 24-bit signed and unsigned integers respectively. 
-We will start with the basics and later add more functionality to it.
+## Introduction
+I will initially creating structured pairs, Int24 and UInt24, leading to a usable library package with the aim to provides some basics like initialise, set, get and provide a description string that will make the values look a little better than the default.
+
+### v0.0.1 - Basics
+- Initialisers; Int24(), Int24(123), Int24(Int8(-123))
+- Literal types; let a: Int24 = 123, let a: Int24 = -3.14159
+- Descriptions; Int24().description, String("\(Int24())")
 
