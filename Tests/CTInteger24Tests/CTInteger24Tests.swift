@@ -110,3 +110,24 @@ func additiveArithmetic_tests() async throws {
     b2 = b2 + 1
     #expect(b2 == 3)
 }
+
+@Test("Numeric")
+func numeric_tests() async throws {
+    var a1: Int24 = 2
+    let a2: Int24 = 3
+    
+    a1 *= a2
+    #expect(a1 == 6)
+    
+    a1 = a1 * 2
+    #expect(a1 == 12)
+    
+    var b1: UInt24 = 2
+    let b2: UInt24 = 3
+    
+    b1 *= b2
+    #expect(b1 == 6)
+    
+    b1 = b1 * 2
+    #expect(b1 == 12)
+}

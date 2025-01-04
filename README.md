@@ -28,3 +28,6 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 ### v0.0.3 - Added protocol AdditiveArithmetic
 - The minimum required was to add the addition (`+`) and subtraction (`-`) operators.
 - Additionally, the operators `+=` and `-=` are automatically included, along with the variable zero.
+
+### v0.0.4 - Added protocol Numeric
+- The minimum required enhancements were to include the multiplication operators `*` and `*=`, the method `init?(exactly)`, and the variable `magnitude`.
