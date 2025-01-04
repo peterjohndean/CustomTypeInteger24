@@ -23,4 +23,4 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 - The minimum required syntax is to include `==` and `<` operators. 
 - These operators, along with `>`, `>=`, `<=`, and `!=`, are automatically included.
 - While this syntax enables us to work with literals, it does not allow operands to interact with other data types.
-- We will need to include these operators in the next version.
+- We will need to include these additional operators in the next version.
