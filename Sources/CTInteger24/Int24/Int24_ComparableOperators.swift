@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension Int24: Comparable {
+extension Int24 {
     public static func == (lhs: Int24, rhs: Int24) -> Bool {
         lhs.value == rhs.value
     }

@@ -17,29 +17,34 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension Int24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
+extension Int24 {
     // MARK: Default
-    public init(_ source: Self) {
+    public init(_ source: Int24) {
         _value = source._value
     }
     
     public init(_truncatingBits bits: UInt) {
-        self.init(truncatingIfNeeded: bits)
+        let truncatedBits = Int32(bits & UInt(Int24.maskInt))
+        self.value = (truncatedBits & Int24.signedMaskInt) != 0
+        ? (truncatedBits | ~Int24.signedMaskInt)
+        : truncatedBits
     }
     
     // MARK: Initialisers for literal types.
     //i.e. let a: Int24 = 123456
     // or  let a: Int24 = -3.1415926
     public init(integerLiteral source: IntegerLiteralType) {
-        self.init(Int32(source)) // Call the `init<T: FixedWidthInteger>` initializer.
+        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
     
     public init(floatLiteral source: FloatLiteralType) {
+        debugPrint(#function, "public init(floatLiteral source: FloatLiteralType) Initializing Int24 with value: \(source)")
         self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
 
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ source: T) {
+        debugPrint(type(of: source), source >= Int24.minInt)
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
@@ -49,6 +54,7 @@ extension Int24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     
     // MARK: Initialisers for BinaryInteger
     public init<T: BinaryInteger>(_ source: T) {
+        debugPrint(#function, "public init<T: BinaryInteger>(_ source: T) Initializing Int24 with value: \(source)")
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
@@ -62,11 +68,11 @@ extension Int24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
     }
     
     public init<T>(truncatingIfNeeded source: T) where T: BinaryInteger {
-        guard source >= Int24.minInt && source <= Int24.maxInt else {
-            self.value = Int32(source & T(Int24.maskInt))
-            return
-        }
-        self.value = Int32(source)
+        // Mask to get the lower 24 bits
+        let masked = Int32(source & T(Int24.maskInt))
+        
+        // Adjust for signed range
+        self.value = masked > Int24.maxInt ? masked - Int32(Int24.maskInt + 1) : masked
     }
     
     public init<T>(clamping source: T) where T: BinaryInteger {

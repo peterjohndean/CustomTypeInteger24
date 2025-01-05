@@ -17,28 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension Int24: AdditiveArithmetic, BinaryInteger {
-    
-    public typealias Words = [UInt]
-
-    public static var isSigned: Bool { return true }
-    
-    public var bitWidth: Int { return 24 }
-
-    public var words: Words { [UInt(abs(self.value))] }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(self.value)
-    }
-    
-    public var trailingZeroBitCount: Int {
-        return self._value == 0 ? 24 : self._value.trailingZeroBitCount
-    }
+extension Int24 {
     
     public static func -(lhs: Int24, rhs: Int24) -> Int24 {
         let result = lhs.subtractingReportingOverflow(rhs)
         guard !result.overflow else {
-            fatalError("\(#function) Overflow in subtraction")
+            fatalError("\(#function) Overflow in subtraction (\(lhs.value) - \(rhs.value))")
         }
         return result.partialValue
     }
@@ -46,43 +30,31 @@ extension Int24: AdditiveArithmetic, BinaryInteger {
     public static func +(lhs: Int24, rhs: Int24) -> Int24 {
         let result = lhs.addingReportingOverflow(rhs)
         guard !result.overflow else {
-            fatalError("\(#function) Overflow in addition")
+            fatalError("\(#function) Overflow in addition (\(lhs.value) + \(rhs.value))")
         }
         return result.partialValue
     }
     
-    public static func <<=<RHS>(lhs: inout Int24, rhs: RHS) where RHS: BinaryInteger {
-        lhs = lhs << Int32(rhs)
-    }
-    
-    public static func >>=<RHS>(lhs: inout Int24, rhs: RHS) where RHS: BinaryInteger {
-        lhs = lhs >> Int32(rhs)
-    }
-    
-    public static prefix func ~(x: Int24) -> Int24 {
-        return Int24(~x.value)
-    }
-    
     public static func *(lhs: Int24, rhs: Int24) -> Int24 {
-        let fullResult = lhs.multipliedReportingOverflow(by: rhs)
-        guard !fullResult.overflow else {
-            fatalError("\(#function) Overflow in multiplication")
+        let result = lhs.multipliedReportingOverflow(by: rhs)
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in multiplication (\(lhs.value) * \(rhs.value))")
         }
-        return fullResult.partialValue //Int24(truncatingIfNeeded: fullResult.partialValue)
+        return result.partialValue
     }
     
     public static func *=(lhs: inout Int24, rhs: Int24) {
         let result = lhs.multipliedReportingOverflow(by: rhs)
         guard !result.overflow else {
-            fatalError("\(#function) Overflow in multiplication")
+            fatalError("\(#function) Overflow in multiplication (\(lhs.value) *= \(rhs.value))")
         }
-        lhs = Self(result.partialValue)
+        lhs = result.partialValue
     }
     
     public static func /(lhs: Int24, rhs: Int24) -> Int24 {
         let result = lhs.dividedReportingOverflow(by: rhs)
         guard !result.overflow else {
-            fatalError("\(#function) Overflow in division")
+            fatalError("\(#function) Overflow in division (\(lhs.value) / \(rhs.value))")
         }
         return result.partialValue
     }
@@ -90,28 +62,75 @@ extension Int24: AdditiveArithmetic, BinaryInteger {
     public static func %(lhs: Int24, rhs: Int24) -> Int24 {
         let result = lhs.remainderReportingOverflow(dividingBy: rhs)
         guard !result.overflow else {
-            fatalError("Overflow in division")
+            fatalError("Overflow in division (\(lhs.value) % \(rhs.value))")
         }
         return result.partialValue
     }
 
     public static func /=(lhs: inout Int24, rhs: Int24) {
-        lhs = lhs / rhs
+        let result = lhs.dividedReportingOverflow(by: rhs)
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in division (\(lhs.value) /= \(rhs.value))")
+        }
+        lhs = Self(result.partialValue)
     }
 
     public static func %=(lhs: inout Int24, rhs: Int24) {
-        lhs = lhs % rhs
+        let result = lhs.remainderReportingOverflow(dividingBy: rhs)
+        guard !result.overflow else {
+            fatalError("Overflow in division (\(lhs.value) %= \(rhs.value))")
+        }
+        lhs = Self(result.partialValue)
     }
-
-    public static func &= (lhs: inout Int24, rhs: Int24) {
-        lhs._value &= rhs._value
+    
+    // MARK: Bitwise Operators
+    public static func <<= <RHS>(lhs: inout Int24, rhs: RHS) where RHS: BinaryInteger {
+        precondition(rhs >= 0 && rhs < Int24.bitWidth, "Shift amount out of bounds")
+        lhs = lhs << Int32(rhs)
+    }
+    
+    public static func >>= <RHS>(lhs: inout Int24, rhs: RHS) where RHS: BinaryInteger {
+        precondition(rhs >= 0 && rhs < Int24.bitWidth, "Shift amount out of bounds")
+        lhs = lhs >> Int32(rhs)
+    }
+    
+    public static func << <RHS>(lhs: Int24, rhs: RHS) -> Int24 where RHS : BinaryInteger {
+        guard rhs != 0 else { return lhs }
+        let shifted = lhs.value << Int32(rhs)
+        return Int24(shifted & Int24.maskInt)
+    }
+    
+    public static func >> <RHS>(lhs: Int24, rhs: RHS) -> Int24 where RHS : BinaryInteger {
+        guard rhs != 0 else { return lhs }
+        let shifted = lhs.value >> Int32(rhs)
+        return Int24(shifted & Int24.maskInt)
+    }
+    
+    public static prefix func ~(x: Int24) -> Int24 {
+        return Int24(~x.value)
+    }
+    
+    public static func &(lhs: Int24, rhs: Int24) -> Int24 {
+        return Int24(lhs.value & rhs.value)
+    }
+    
+    public static func &=(lhs: inout Int24, rhs: Int24) {
+        lhs = lhs & rhs
+    }
+    
+    public static func |(lhs: Int24, rhs: Int24) -> Int24 {
+        return Int24(lhs.value | rhs.value)
     }
     
     public static func |=(lhs: inout Int24, rhs: Int24) {
-        lhs._value |= rhs._value
+        lhs = lhs | rhs
+    }
+    
+    public static func ^(lhs: Int24, rhs: Int24) -> Int24 {
+        return Int24(lhs.value ^ rhs.value)
     }
     
     public static func ^=(lhs: inout Int24, rhs: Int24) {
-        lhs._value ^= rhs._value
+        lhs = lhs ^ rhs
     }
 }
