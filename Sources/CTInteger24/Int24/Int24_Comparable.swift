@@ -18,11 +18,11 @@
  */
 
 extension Int24: Comparable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func == (lhs: Int24, rhs: Int24) -> Bool {
         lhs.value == rhs.value
     }
 
-    public static func < (lhs: Self, rhs: Self) -> Bool {
+    public static func < (lhs: Int24, rhs: Int24) -> Bool {
         lhs.value < rhs.value
     }
 }

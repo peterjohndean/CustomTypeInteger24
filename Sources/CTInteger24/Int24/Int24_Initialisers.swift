@@ -23,22 +23,62 @@ extension Int24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
         _value = source._value
     }
     
-    // MARK: Initialisers for literal types
+    public init(_truncatingBits bits: UInt) {
+        self.init(truncatingIfNeeded: bits)
+    }
+    
+    // MARK: Initialisers for literal types.
+    //i.e. let a: Int24 = 123456
+    // or  let a: Int24 = -3.1415926
     public init(integerLiteral source: IntegerLiteralType) {
-        self.init(source)    // let a: Int24 = 123456
+        self.init(Int32(source)) // Call the `init<T: FixedWidthInteger>` initializer.
     }
     
     public init(floatLiteral source: FloatLiteralType) {
-        self.init(source)    // let a: Int24 = -3.1415926
+        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
 
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ source: T) {
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
-            "\(source) is outside the representable range of Int24 (\(Int24.minInt)...\(Int24.maxInt))."
+            "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
         )
         self.value = Int32(source)
+    }
+    
+    // MARK: Initialisers for BinaryInteger
+    public init<T: BinaryInteger>(_ source: T) {
+        precondition(
+            source >= Int24.minInt && source <= Int24.maxInt,
+            "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
+        )
+        self.value = Int32(source)
+    }
+    
+    public init?<T>(exactly source: T) where T: BinaryInteger {
+        guard source >= Int24.minInt && source <= Int24.maxInt else { return nil }
+        self.value = Int32(source)
+    }
+    
+    public init<T>(truncatingIfNeeded source: T) where T: BinaryInteger {
+        guard source >= Int24.minInt && source <= Int24.maxInt else {
+            self.value = Int32(source & T(Int24.maskInt))
+            return
+        }
+        self.value = Int32(source)
+    }
+    
+    public init<T>(clamping source: T) where T: BinaryInteger {
+        let clampedValue: Int32
+        if source < T(Int24.minInt) {
+            clampedValue = Int24.minInt
+        } else if source > T(Int24.maxInt) {
+            clampedValue = Int24.maxInt
+        } else {
+            clampedValue = Int32(source)
+        }
+        self.value = clampedValue
     }
     
     // MARK: Initialisers for BinaryFloatingPoint
@@ -46,8 +86,16 @@ extension Int24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
         let roundedValue = Int32(source.rounded())
         precondition(
             roundedValue >= Int24.minInt && roundedValue <= Int24.maxInt,
-            "\(roundedValue) is outside the representable range of Int24 (\(Int24.minInt)...\(Int24.maxInt))."
+            "\(roundedValue) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
         )
         self.value = roundedValue
+    }
+    
+    public init?<T>(exactly source: T) where T: BinaryFloatingPoint {
+        guard let integerValue = Int32(exactly: source),
+              integerValue >= Int24.minInt && integerValue <= Int24.maxInt else {
+            return nil
+        }
+        self.value = integerValue
     }
 }

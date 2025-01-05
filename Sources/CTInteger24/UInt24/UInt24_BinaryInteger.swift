@@ -21,36 +21,36 @@ extension UInt24: BinaryInteger {
     
     public typealias Words = [UInt]
     
-    public init?<T>(exactly source: T) where T : BinaryFloatingPoint {
+    public init?<T>(exactly source: T) where T: BinaryFloatingPoint {
         guard let integerValue = UInt32(exactly: source),
-              integerValue >= Self.minInt && integerValue <= Self.maxInt else {
+              integerValue >= Self.min && integerValue <= Self.max else {
             return nil
         }
         self.value = integerValue
     }
     
-    public init<T>(_ source: T) where T : BinaryInteger {
+    public init<T>(_ source: T) where T: BinaryInteger {
         precondition(
-            source >= Self.minInt && source <= Self.maxInt,
-            "\(source) is outside the representable range of UInt24 (\(UInt24.minInt)...\(UInt24.maxInt))."
+            source >= Self.min && source <= Self.max,
+            "\(source) is outside the representable range of Int24 (\(Self.min)...\(Self.max))."
         )
         self.init(truncatingIfNeeded: source)
     }
     
-    public init<T>(truncatingIfNeeded source: T) where T : BinaryInteger {
-        guard source >= Self.minInt && source <= Self.maxInt else {
+    public init<T>(truncatingIfNeeded source: T) where T: BinaryInteger {
+        guard source >= Self.min && source <= Self.max else {
             self.value = UInt32(source & T(Self.maskInt))
             return
         }
         self.value = UInt32(source)
     }
     
-    public init<T>(clamping source: T) where T : BinaryInteger {
+    public init<T>(clamping source: T) where T: BinaryInteger {
         debugPrint(#function, source)
         let clampedValue: UInt32
-        if source < T(Self.minInt) {
+        if source < T(Self.min) {
             clampedValue = Self.minInt
-        } else if source > T(Self.maxInt) {
+        } else if source > T(Self.max) {
             clampedValue = Self.maxInt
         } else {
             clampedValue = UInt32(source)
@@ -73,7 +73,8 @@ extension UInt24: BinaryInteger {
     }
     
     public static func <<= <RHS>(lhs: inout Self, rhs: RHS) where RHS : BinaryInteger {
-        lhs = Self(lhs.value << UInt32(rhs))
+//        lhs = Self(lhs.value << UInt32(rhs))
+        lhs = lhs << Self(rhs)
     }
     
     public static func >>= <RHS>(lhs: inout Self, rhs: RHS) where RHS : BinaryInteger {
@@ -85,7 +86,11 @@ extension UInt24: BinaryInteger {
     }
     
     public static func /(lhs: Self, rhs: Self) -> Self {
-        Self(lhs.value / rhs.value)
+        let result = Self(lhs).dividedReportingOverflow(by: Self(rhs))
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in division")
+        }
+        return result.partialValue
     }
     
     public static func %(lhs: Self, rhs: Self) -> Self {

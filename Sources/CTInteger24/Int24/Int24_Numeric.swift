@@ -18,22 +18,9 @@
  */
 
 extension Int24: Numeric {
-    public typealias Magnitude = Self
+    public typealias Magnitude = UInt24
 
     public var magnitude: Self.Magnitude {
-        return Self(abs(self.value))
-    }
-    
-    public init?<T>(exactly source: T) where T : BinaryInteger {
-        guard source >= Int24.minInt && value <= Int24.maxInt else { return nil }
-        self.value = Int32(source)
-    }
-
-    public static func * (lhs: Self, rhs: Self) -> Self {
-        return Self(lhs.value * rhs.value)
-    }
-
-    public static func *= (lhs: inout Self, rhs: Self) {
-        return lhs.value *= rhs.value
+        return UInt24(self.value)
     }
 }

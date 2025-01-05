@@ -34,3 +34,8 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 
 ### v0.0.5 - Added protocol BinaryInteger
 - Adhering to this protocol proved to be a complex task. I anticipate the necessity of further refinements, as I have already identified several issues.
+
+### v0.0.6 - Added protocol FixedWidthInteger
+- Whilst this has been added, it would appear my implementation is now causing circular loops. Now debugging them before releasing 0.0.6
+- Found my issues, don't use Self in initialisers, operators, any computed properties or anything that is likely to trigger a circular event.
+- Ok, started tidying up the code, moving similar variables, methods into the same files for improved management - that i've learning from finding circular loops.

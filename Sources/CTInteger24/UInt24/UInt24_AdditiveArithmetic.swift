@@ -18,12 +18,19 @@
  */
 
 extension UInt24: AdditiveArithmetic {
-    public static func - (lhs: Self, rhs: Self) -> Self {
-        return Self(lhs.value - rhs.value)
+    public static func -(lhs: Self, rhs: Self) -> Self {
+        let result = Self(lhs).subtractingReportingOverflow(Self(rhs))
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in subtraction")
+        }
+        return result.partialValue
     }
-
-    public static func + (lhs: Self, rhs: Self) -> Self {
-        return Self(lhs.value + rhs.value)
+    
+    public static func +(lhs: Self, rhs: Self) -> Self {
+        let result = Self(lhs).addingReportingOverflow(Self(rhs))
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in addition")
+        }
+        return result.partialValue
     }
-
 }

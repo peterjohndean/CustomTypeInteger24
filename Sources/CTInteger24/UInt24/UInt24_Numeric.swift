@@ -20,20 +20,28 @@
 extension UInt24: Numeric {
     public typealias Magnitude = Self
 
-    public var magnitude: Self.Magnitude {
-        return Self(self.value)
+    public var magnitude: Self {
+        return self // No need for magnitude, as it's already non-negative
     }
     
-    public init?<T>(exactly source: T) where T : BinaryInteger {
-        guard source >= UInt24.minInt && source <= UInt24.maxInt else { return nil }
+    public init?<T>(exactly source: T) where T: BinaryInteger {
+        guard source >= Self.minInt && source <= Self.maxInt else { return nil }
         self.value = UInt32(source)
     }
 
-    public static func * (lhs: Self, rhs: Self) -> Self {
-        return Self(lhs.value * rhs.value)
+    public static func *(lhs: Self, rhs: Self) -> Self {
+        let result = Self(lhs).multipliedReportingOverflow(by: Self(rhs))
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in multiplication")
+        }
+        return Self(result.partialValue)
     }
-
-    public static func *= (lhs: inout Self, rhs: Self) {
-        return lhs.value *= rhs.value
+    
+    public static func *=(lhs: inout Self, rhs: Self) {
+        let result = Self(lhs).multipliedReportingOverflow(by: Self(rhs))
+        guard !result.overflow else {
+            fatalError("\(#function) Overflow in multiplication")
+        }
+        lhs = Self(result.partialValue)
     }
 }

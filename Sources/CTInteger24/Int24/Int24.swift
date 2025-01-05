@@ -22,6 +22,7 @@ public struct Int24 {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
     internal var _value: Int32 = 0
     
+    // Getter / Setter
     public internal(set) var value: Int32 {
         get {
             // Ensure the returned Int32 is properly representing our value
@@ -34,11 +35,16 @@ public struct Int24 {
     
     // TODO: These will need to eventually become public static var min: Self to be compliant.
     // Define our bitMasks
-    public static var maskInt: Int32 { 0x00FF_FFFF }
-    public static var signedMaskInt: Int32 { 0x0080_0000 }
+    public static let maskInt: Int32 = 0x00FF_FFFF
+    public static let signedMaskInt: Int32 = 0x0080_0000
     
     // Define our min/max values
     public static let minInt: Int32 = -8_388_608    // 2^23
     public static let maxInt: Int32 = 8_388_607     // 2^23 - 1
     
+    //
+    public static let min: Int24 = Int24(minInt)
+    public static let max: Int24 = Int24(maxInt)
+    public static let bitWidth: Int = 24
+
 }
