@@ -36,11 +36,22 @@ extension FixedWidthInteger {
     }
 }
 
+
 @Test func q0() async throws {
     print(Int24.min.binaryString)
     print(Int24.max.binaryString)
     
     print((101 as UInt24).binaryString)
+    
+    print(Int24(1) != UInt32(0))
+    print(Int32(-1) != Int24(-2))
+    print(Int24(3.12) == 3)
+    
+    let minValue = Int24(Int24.min)
+    #expect(Int24.min == minValue.value)
+    #expect(minValue.value == Int24.min)
+    #expect(Int24.min == Float(-8388608))
+    #expect(Float(-8388608) == Int24.min)
 }
 
 @Test func quickie() async throws {

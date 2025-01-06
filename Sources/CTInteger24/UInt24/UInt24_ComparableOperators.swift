@@ -18,11 +18,108 @@
  */
 
 extension UInt24 {
+    // MARK: Minimum required
     public static func == (lhs: UInt24, rhs: UInt24) -> Bool {
         lhs.value == rhs.value
     }
 
     public static func < (lhs: UInt24, rhs: UInt24) -> Bool {
         lhs.value < rhs.value
+    }
+    
+    // MARK: UInt24 to Any FixedWidthInteger (e.g., Int, UInt, etc.)
+    public static func >(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value > rhs
+    }
+    
+    public static func <(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value < rhs
+    }
+    
+    public static func >=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value >= rhs
+    }
+    
+    public static func <=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value <= rhs
+    }
+    
+    public static func ==(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value == rhs
+    }
+    
+    public static func !=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+        return lhs.value != rhs
+    }
+    
+    // MARK: Any FixedWidthInteger (e.g., Int, UInt, etc.) to UInt24
+    public static func >(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs > rhs.value    }
+    
+    public static func <(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs < rhs.value    }
+    
+    public static func >=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs >= rhs.value
+    }
+    
+    public static func <=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs <= rhs.value
+    }
+    
+    public static func ==(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs == rhs.value
+    }
+    
+    public static func !=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+        return lhs != rhs.value
+    }
+    
+    // MARK: UInt24 to Any BinaryFloatingPoint (e.g., Float16, Float32, etc.)
+    public static func ><T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) > rhs
+    }
+    
+    public static func <<T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) < rhs
+    }
+    
+    public static func >=<T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) >= rhs
+    }
+    
+    public static func <=<T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) <= rhs
+    }
+    
+    public static func ==<T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) == rhs
+    }
+    
+    public static func !=<T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
+        return T(lhs.value) != rhs
+    }
+    
+    // MARK: BinaryFloatingPoint (e.g., Float16, Float32, etc.) to UInt24
+    public static func ><T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs > T(rhs.value)    }
+    
+    public static func <<T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs < T(rhs.value)    }
+    
+    public static func >=<T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs >= T(rhs.value)
+    }
+    
+    public static func <=<T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs <= T(rhs.value)
+    }
+    
+    public static func ==<T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs == T(rhs.value)
+    }
+    
+    public static func !=<T: BinaryFloatingPoint>(lhs: T, rhs: UInt24) -> Bool {
+        return lhs != T(rhs.value)
     }
 }

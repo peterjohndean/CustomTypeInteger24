@@ -45,3 +45,8 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 ### v0.0.7 - Minimum compliance for UInt24 & Int24
 - Minimal compliance has been achieved.
 - Much more work remains, including performance improvements.
+
+### v0.0.8 - Comparable with FixedWidthIntegers and BinaryFloatingPoints
+- Now comparable with both floating-point numbers and integers of other types, from both the left-hand side and right-hand side.
+- Minor optimizations.
+- Bug fixes for the bitwise shift operations.
