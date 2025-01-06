@@ -20,7 +20,6 @@
 extension UInt24 {
     // MARK: Default
     public init(_ source: UInt24) {
-        debugPrint(type(of: source), source >= Int24.minInt)
         _value = source._value
     }
     
@@ -33,7 +32,12 @@ extension UInt24 {
     //i.e. let a: UInt24 = 123456
     // or  let a: UInt24 = -3.1415926
     public init(integerLiteral source: IntegerLiteralType) {
-        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
+//        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
+        precondition(
+            source >= UInt24.minInt && source <= UInt24.maxInt,
+            "\(source) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
+        )
+        self.value = UInt32(source)
     }
     
     public init(floatLiteral source: FloatLiteralType) {

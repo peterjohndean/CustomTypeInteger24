@@ -23,6 +23,58 @@ import Testing
 
 struct UInt24_Tests {
     
+    // Test quotientAndRemainder
+    @Test("Test quotientAndRemainder")
+    func testQuotientAndRemainder() {
+        let a: UInt24 = 25
+        let b: UInt24 = 4
+        let (quotient, remainder) = a.quotientAndRemainder(dividingBy: b)
+        #expect(quotient == 6, "Quotient should be 6 for 25 / 4.")
+        #expect(remainder == 1, "Remainder should be 1 for 25 % 4.")
+        
+        let c: UInt24 = 0
+        let (zeroQuotient, zeroRemainder) = c.quotientAndRemainder(dividingBy: b)
+        #expect(zeroQuotient == 0, "Quotient should be 0 for 0 / 4.")
+        #expect(zeroRemainder == 0, "Remainder should be 0 for 0 % 4.")
+    }
+    
+    @Test func testQuotientAndRemainderUInt32() {
+        let a: UInt32 = 25
+        let b: UInt32 = 4
+        let (quotient, remainder) = a.quotientAndRemainder(dividingBy: b)
+        #expect(quotient == 6, "Quotient should be 6 for 25 / 4.")
+        #expect(remainder == 1, "Remainder should be 1 for 25 % 4.")
+        
+        let c: UInt32 = 0
+        let (zeroQuotient, zeroRemainder) = c.quotientAndRemainder(dividingBy: b)
+        #expect(zeroQuotient == 0, "Quotient should be 0 for 0 / 4.")
+        #expect(zeroRemainder == 0, "Remainder should be 0 for 0 % 4.")
+    }
+    
+    // Test isMultiple
+    @Test("Test isMultiple")
+    func testIsMultiple() {
+        let a: UInt24 = 24
+        let b: UInt24 = 6
+        #expect(a.isMultiple(of: b) == true, "24 should be a multiple of 6.")
+        
+        let c: UInt24 = 25
+        #expect(c.isMultiple(of: b) == false, "25 should not be a multiple of 6.")
+        
+        let d: UInt24 = 0
+        #expect(d.isMultiple(of: b) == true, "0 should be a multiple of 6.")
+    }
+    
+    // Test signum
+    @Test("Test signum")
+    func testSignum() {
+        let a: UInt24 = 25
+        #expect(a.signum() == 1, "Signum should return 1 for positive numbers.")
+        
+        let b: UInt24 = 0
+        #expect(b.signum() == 0, "Signum should return 0 for zero.")
+    }
+    
     // Test Positive Values
     @Test("Test Positive Values")
     func testPositiveValues() {
