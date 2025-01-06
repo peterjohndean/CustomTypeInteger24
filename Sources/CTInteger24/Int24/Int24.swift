@@ -68,7 +68,9 @@ public struct Int24:
     public internal(set) var value: Int32 {
         get {
             // Ensure the returned Int32 is properly representing our value
-            return (_value & Int24.signedMaskInt != 0) ? (_value | ~Int24.maskInt) : _value
+//            return (_value & Int24.signedMaskInt != 0) ? (_value | ~Int24.maskInt) : _value
+            // Optimized sign extension
+            return (_value ^ Int24.signedMaskInt) - Int24.signedMaskInt
         }
         set {
             _value = newValue & Int24.maskInt

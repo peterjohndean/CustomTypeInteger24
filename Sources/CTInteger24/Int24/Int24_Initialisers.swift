@@ -26,9 +26,8 @@ extension Int24 {
     
     public init(_truncatingBits bits: UInt) {
         let truncatedBits = Int32(bits & UInt(Int24.maskInt))
-        self.value = (truncatedBits & Int24.signedMaskInt) != 0
-        ? (truncatedBits | ~Int24.signedMaskInt)
-        : truncatedBits
+//        self.value = (truncatedBits & Int24.signedMaskInt) != 0 ? (truncatedBits | ~Int24.signedMaskInt) : truncatedBits
+        self.value = (truncatedBits ^ Int24.signedMaskInt) - Int24.signedMaskInt
     }
     
     // MARK: Initialisers for literal types.

@@ -47,7 +47,8 @@ extension Int24 {
         let swappedValue = Int32(byte1) << 16 | Int32(byte2) << 8 | Int32(byte3)
         
         // For Signed values
-        let newValue = (swappedValue & Int24.signedMaskInt != 0) ? (swappedValue | ~Int24.maskInt) : swappedValue
+//        let newValue = (swappedValue & Int24.signedMaskInt != 0) ? (swappedValue | ~Int24.maskInt) : swappedValue
+        let newValue = (swappedValue ^ Int24.signedMaskInt) - Int24.signedMaskInt
         
         return Int24(newValue)
     }
