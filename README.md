@@ -42,4 +42,6 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 - I have added Int24 initializer tests and adjusted the code to address any bugs identified.
 - I have adjusted for bugs, misunderstandings, and other issues. Now I am committing for Int24. UInt24 will be next.
 
-### v0.0.7 - Added protocol FixedWidthInteger for UInt24 & Int24
+### v0.0.7 - Minimum compliance for UInt24 & Int24
+- Minimal compliance has been achieved.
+- Much more work remains, including performance improvements.

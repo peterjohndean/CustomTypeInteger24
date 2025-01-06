@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
+
 #if DEBUG
 extension FixedWidthInteger {
     /// Converts an Integer to a formatted binary (radix 2) string.

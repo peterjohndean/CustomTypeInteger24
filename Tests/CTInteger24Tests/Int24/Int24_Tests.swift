@@ -40,16 +40,16 @@ struct Int24_Tests {
     @Test("Test Magnitude")
     func testMagnitude() {
         // Positive value
-//        let a: Int24 = 0x00FF00
-//        #expect(a.magnitude == UInt24(0x00FF00), "Magnitude should match UInt24 conversion for positive value.")
-//        
-//        // Negative value
-//        let b: Int24 = -0x00FF00
-//        #expect(b.magnitude == UInt24(0x00FF00), "Magnitude should match UInt24 conversion for negative value.")
-//        
-//        // Zero value
-//        let c: Int24 = 0
-//        #expect(c.magnitude == UInt24(0), "Magnitude should be 0 for zero value.")
+        let a: Int24 = 0x00FF00
+        #expect(a.magnitude == UInt24(0x00FF00), "Magnitude should match UInt24 conversion for positive value.")
+        
+        // Negative value
+        let b: Int24 = abs(-0x00FF00)
+        #expect(b.magnitude == UInt24(0x00FF00), "Magnitude should match UInt24 conversion for negative value.")
+        
+        // Zero value
+        let c: Int24 = 0
+        #expect(c.magnitude == UInt24(0), "Magnitude should be 0 for zero value.")
     }
     
     // Test Words
@@ -179,10 +179,13 @@ struct Int24_Tests {
         let max = Int24.max
         let min = Int24.min
         
-        // Test magnitude of max and min values
-//        #expect(max.magnitude == UInt24(Int24.maxInt), "Magnitude of max should match the max int value.")
-//        #expect(min.magnitude == UInt24(Int24.maxInt), "Magnitude of min should match the max int value.")
+        let a: Int32 = Int32.min
+        #expect(a.magnitude == UInt32(Int32.max) + 1, "UInt32 representation of Int32.min should match Int32.min.")
         
+        // Test magnitude of max and min values
+        #expect(max.magnitude == UInt24(Int24.max), "Magnitude of max should match the max int value.")
+        #expect(min.magnitude == UInt24(Int24.max) + 1, "Magnitude of min should match the max int value.")
+
         // Check words for max and min
         #expect(max.words == [UInt(Int24.max)], "Words of max should match the max value.")
         #expect(min.words == [UInt(abs(Int24.max)) + 1], "Words of min should match the max value.")

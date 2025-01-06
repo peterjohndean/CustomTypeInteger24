@@ -17,51 +17,51 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension UInt24: FixedWidthInteger, UnsignedInteger {
-    
-    public static var max: UInt24 { Self(maxInt) }
-    public static var min: UInt24 { Self(minInt) }
-    public static var bitWidth: Int { 24 }
-    
-    public init(_truncatingBits bits: UInt) {
-        self.init(truncatingIfNeeded: bits)
+extension UInt24 {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.value)
     }
     
-    public func addingReportingOverflow(_ rhs: Self) -> (partialValue: Self, overflow: Bool) {
+    public func addingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
         let result = self.value + rhs.value
-        guard result >= Self.minInt && result <= Self.maxInt else {
+        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
             return (Self(0), true)  // Overflow
         }
         return (Self(result), false)
     }
     
-    public func subtractingReportingOverflow(_ rhs: Self) -> (partialValue: Self, overflow: Bool) {
+    public func subtractingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
+        guard self.value >= rhs.value else {
+            return (Self(0), true)  // Overflow
+        }
+        
         let result = self.value - rhs.value
-        guard result >= Self.minInt && result <= Self.maxInt else {
+        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
             return (Self(0), true)  // Overflow
         }
         return (Self(result), false)
     }
     
-    public func multipliedReportingOverflow(by rhs: Self) -> (partialValue: Self, overflow: Bool) {
-        let fullResult = self.value * rhs.value
-        let truncatedResult = fullResult & Self.maskInt
-        let overflow = fullResult > Self.maxInt
-        return (Self(truncatedResult), overflow)
+    public func multipliedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
+        let result = self.value * rhs.value
+        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
+            return (Self(0), true)  // Overflow
+        }
+        return (Self(result), false)
     }
     
-    public func dividedReportingOverflow(by rhs: Self) -> (partialValue: Self, overflow: Bool) {
+    public func dividedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
         guard rhs != 0 else {
             return (Self(0), true)  // Division by zero
         }
         let result = self.value / rhs.value
-        guard result >= Self.minInt && result <= Self.maxInt else {
+        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
             return (Self(0), true)  // Overflow
         }
         return (Self(result), false)
     }
     
-    public func remainderReportingOverflow(dividingBy rhs: Self) -> (partialValue: Self, overflow: Bool) {
+    public func remainderReportingOverflow(dividingBy rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
         guard rhs != 0 else {
             return (Self(0), true)  // Division by zero
         }
@@ -69,33 +69,18 @@ extension UInt24: FixedWidthInteger, UnsignedInteger {
         return (Self(result), false)  // No overflow for remainder
     }
     
-    public func dividingFullWidth(_ dividend: (high: Self, low: Self.Magnitude)) -> (quotient: Self, remainder: Self) {
+    public func dividingFullWidth(_ dividend: (high: UInt24, low: UInt24.Magnitude)) -> (quotient: UInt24, remainder: UInt24) {
         let fullValue = (UInt64(dividend.high.value) << 32) | UInt64(dividend.low)
         let divisor = UInt64(self.value)
         
         let quotient = fullValue / divisor
         let remainder = fullValue % divisor
         
-        guard quotient >= Self.minInt && quotient <= Self.maxInt else {
+        guard quotient >= UInt24.minInt && quotient <= UInt24.maxInt else {
             fatalError("Overflow occurred during full-width division")
         }
         
         return (Self(quotient), Self(remainder))
     }
 
-    public var nonzeroBitCount: Int {
-        return self._value.nonzeroBitCount
-    }
-
-    public var leadingZeroBitCount: Int {
-        return self._value.leadingZeroBitCount - 8
-    }
-
-    public var byteSwapped: Self {
-        let byte1 = UInt8(self._value & 0xFF)
-        let byte2 = UInt8((self._value >> 8) & 0xFF)
-        let byte3 = UInt8((self._value >> 16) & 0xFF)
-        let swappedValue = Int32(byte1) << 16 | Int32(byte2) << 8 | Int32(byte3)
-        return Self(swappedValue)
-    }
 }

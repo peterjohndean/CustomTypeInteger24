@@ -17,28 +17,72 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension UInt24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
+extension UInt24 {
     // MARK: Default
-    public init(_ source: Self) {
+    public init(_ source: UInt24) {
         _value = source._value
     }
     
-    // MARK: Initialisers for literal types
+    public init(_truncatingBits bits: UInt) {
+        let truncatedBits = UInt32(bits & UInt(UInt24.maskInt))
+        self.value = truncatedBits
+    }
+    
+    // MARK: Initialisers for literal types.
+    //i.e. let a: UInt24 = 123456
+    // or  let a: UInt24 = -3.1415926
     public init(integerLiteral source: IntegerLiteralType) {
-        self.init(source)    // let a: UInt24 = 123456
+        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
     
     public init(floatLiteral source: FloatLiteralType) {
-        self.init(source)    // let a: UInt24 = 123.456
+        debugPrint(#function, "public init(floatLiteral source: FloatLiteralType) Initializing UInt24 with value: \(source)")
+        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
-    
+
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ source: T) {
+        debugPrint(type(of: source), source >= UInt24.minInt)
         precondition(
             source >= UInt24.minInt && source <= UInt24.maxInt,
             "\(source) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
         )
         self.value = UInt32(source)
+    }
+    
+    // MARK: Initialisers for BinaryInteger
+    public init<T: BinaryInteger>(_ source: T) {
+        debugPrint(#function, "public init<T: BinaryInteger>(_ source: T) Initializing UInt24 with value: \(source)")
+        precondition(
+            source >= UInt24.minInt && source <= UInt24.maxInt,
+            "\(source) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
+        )
+        self.value = UInt32(source)
+    }
+    
+    public init?<T>(exactly source: T) where T: BinaryInteger {
+        guard source >= UInt24.minInt && source <= UInt24.maxInt else { return nil }
+        self.value = UInt32(source)
+    }
+    
+    public init<T>(truncatingIfNeeded source: T) where T: BinaryInteger {
+        // Mask to get the lower 24 bits
+        let masked = UInt32(source & T(UInt24.maskInt))
+        
+        // Adjust for signed range
+        self.value = masked > UInt24.maxInt ? masked - UInt32(UInt24.maskInt + 1) : masked
+    }
+    
+    public init<T>(clamping source: T) where T: BinaryInteger {
+        let clampedValue: UInt32
+        if source < T(UInt24.minInt) {
+            clampedValue = UInt24.minInt
+        } else if source > T(UInt24.maxInt) {
+            clampedValue = UInt24.maxInt
+        } else {
+            clampedValue = UInt32(source)
+        }
+        self.value = clampedValue
     }
     
     // MARK: Initialisers for BinaryFloatingPoint
@@ -49,5 +93,13 @@ extension UInt24: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
             "\(roundedValue) is outside the representable range of UInt24 (\(UInt24.min)...\(UInt24.max))."
         )
         self.value = roundedValue
+    }
+    
+    public init?<T>(exactly source: T) where T: BinaryFloatingPoint {
+        guard let integerValue = UInt32(exactly: source),
+              integerValue >= UInt24.minInt && integerValue <= UInt24.maxInt else {
+            return nil
+        }
+        self.value = integerValue
     }
 }

@@ -17,12 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension Int24 {
+extension UInt24 {
     public typealias Magnitude = UInt24
-    public var magnitude: Int24.Magnitude { UInt24(abs(self.value)) }
+    public var magnitude: Self.Magnitude { UInt24(self.value) }
     
     public typealias Words = [UInt]
-    public var words: Words { [UInt(abs(self.value))] }
+    public var words: Words { [UInt(self.value)] }
     
     public var description: String { "\(self.value)" }
     
@@ -35,20 +35,14 @@ extension Int24 {
     }
     
     public var leadingZeroBitCount: Int {
-        // if negative, then 0 is the count.
-        // else, leadingZeroBitCount - 8 -> (Int32.bitWidth - Int24.bitWidth)
-        return (self._value & Self.signedMaskInt) != 0 ? 0 : self._value.leadingZeroBitCount - 8
+        return self._value.leadingZeroBitCount - 8
     }
 
-    public var byteSwapped: Int24 {
+    public var byteSwapped: UInt24 {
         let byte1 = UInt8(self._value & 0xFF)
         let byte2 = UInt8((self._value >> 8) & 0xFF)
         let byte3 = UInt8((self._value >> 16) & 0xFF)
-        let swappedValue = Int32(byte1) << 16 | Int32(byte2) << 8 | Int32(byte3)
-        
-        // For Signed values
-        let newValue = (swappedValue & Int24.signedMaskInt != 0) ? (swappedValue | ~Int24.maskInt) : swappedValue
-        
-        return Int24(newValue)
+        let swappedValue = UInt32(byte1) << 16 | UInt32(byte2) << 8 | UInt32(byte3)
+        return UInt24(swappedValue)
     }
 }

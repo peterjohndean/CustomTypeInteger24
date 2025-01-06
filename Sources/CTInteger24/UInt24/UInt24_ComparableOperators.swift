@@ -17,20 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-extension UInt24: AdditiveArithmetic {
-    public static func -(lhs: Self, rhs: Self) -> Self {
-        let result = Self(lhs).subtractingReportingOverflow(Self(rhs))
-        guard !result.overflow else {
-            fatalError("\(#function) Overflow in subtraction")
-        }
-        return result.partialValue
+extension UInt24 {
+    public static func == (lhs: UInt24, rhs: UInt24) -> Bool {
+        lhs.value == rhs.value
     }
-    
-    public static func +(lhs: Self, rhs: Self) -> Self {
-        let result = Self(lhs).addingReportingOverflow(Self(rhs))
-        guard !result.overflow else {
-            fatalError("\(#function) Overflow in addition")
-        }
-        return result.partialValue
+
+    public static func < (lhs: UInt24, rhs: UInt24) -> Bool {
+        lhs.value < rhs.value
     }
 }

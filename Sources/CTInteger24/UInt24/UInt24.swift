@@ -18,10 +18,10 @@
  */
 
 @frozen
-public struct UInt24 {
-    // Place to hold our 24-bit value. We use the Swift.UInt32 to help us out.
+public struct UInt24: AdditiveArithmetic, BinaryInteger, Comparable, CustomStringConvertible, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, FixedWidthInteger, Numeric, UnsignedInteger {
+    // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
+    // With our getter / setter
     internal var _value: UInt32 = 0
-    
     public internal(set) var value: UInt32 {
         get {
             return self._value
@@ -31,6 +31,18 @@ public struct UInt24 {
         }
     }
     
+    // Raw 24 bit value.
+    public var valueRaw: UInt32 { _value }
+    
+#if DEBUG
+    public var hex: String {
+        return _value.toFormattedHexString
+    }
+    public var bin: String {
+        return _value.toFormattedBinaryString
+    }
+#endif
+    
     // TODO: These will need to eventually become public static var min: Self to be compliant.
     // Define our bitMasks
     public static let maskInt: UInt32 = 0x00FF_FFFF
@@ -38,4 +50,10 @@ public struct UInt24 {
     // Define our min/max values
     public static let minInt: UInt32 = 0            // 0
     public static let maxInt: UInt32 = 16_777_215   // 2^24 - 1
+    
+    // Adherence to Protocol Standards
+    public static let isSigned: Bool = false        // Signed
+    public static let min: UInt24 = UInt24(minInt)  // Minimum value
+    public static let max: UInt24 = UInt24(maxInt)  // Maximum value
+    public static let bitWidth: Int = 24            // 24-bits
 }
