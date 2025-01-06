@@ -72,7 +72,7 @@ extension Int24 {
         guard !result.overflow else {
             fatalError("\(#function) Overflow in division (\(lhs.value) /= \(rhs.value))")
         }
-        lhs = Self(result.partialValue)
+        lhs = result.partialValue
     }
 
     public static func %=(lhs: inout Int24, rhs: Int24) {
@@ -80,7 +80,7 @@ extension Int24 {
         guard !result.overflow else {
             fatalError("Overflow in division (\(lhs.value) %= \(rhs.value))")
         }
-        lhs = Self(result.partialValue)
+        lhs = result.partialValue
     }
     
     // MARK: Bitwise Operators
@@ -96,13 +96,13 @@ extension Int24 {
     
     public static func << <RHS>(lhs: Int24, rhs: RHS) -> Int24 where RHS : BinaryInteger {
         guard rhs != 0 else { return lhs }
-        let shifted = lhs.value << Int32(rhs)
+        let shifted = Int32(lhs) << Int32(rhs)
         return Int24(shifted & Int24.maskInt)
     }
     
     public static func >> <RHS>(lhs: Int24, rhs: RHS) -> Int24 where RHS : BinaryInteger {
         guard rhs != 0 else { return lhs }
-        let shifted = lhs.value >> Int32(rhs)
+        let shifted = Int32(lhs) >> Int32(rhs)
         return Int24(shifted & Int24.maskInt)
     }
     

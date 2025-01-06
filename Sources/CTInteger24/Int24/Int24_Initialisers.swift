@@ -20,6 +20,7 @@
 extension Int24 {
     // MARK: Default
     public init(_ source: Int24) {
+        debugPrint(type(of: source), source >= Int24.minInt)
         _value = source._value
     }
     
@@ -38,13 +39,11 @@ extension Int24 {
     }
     
     public init(floatLiteral source: FloatLiteralType) {
-        debugPrint(#function, "public init(floatLiteral source: FloatLiteralType) Initializing Int24 with value: \(source)")
         self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
     }
 
     // MARK: Initialisers for FixedWidthInteger
     public init<T: FixedWidthInteger>(_ source: T) {
-        debugPrint(type(of: source), source >= Int24.minInt)
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
@@ -54,7 +53,6 @@ extension Int24 {
     
     // MARK: Initialisers for BinaryInteger
     public init<T: BinaryInteger>(_ source: T) {
-        debugPrint(#function, "public init<T: BinaryInteger>(_ source: T) Initializing Int24 with value: \(source)")
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."

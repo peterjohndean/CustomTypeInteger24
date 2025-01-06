@@ -52,7 +52,16 @@ extension FixedWidthInteger {
 #endif
 
 @frozen
-public struct Int24: AdditiveArithmetic, BinaryInteger, Comparable, CustomStringConvertible, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, FixedWidthInteger, Numeric, SignedInteger {
+public struct Int24:
+    AdditiveArithmetic,
+        BinaryInteger,
+        Comparable,
+        CustomStringConvertible,
+        ExpressibleByFloatLiteral,
+        ExpressibleByIntegerLiteral,
+        FixedWidthInteger,
+        Numeric,
+        SignedInteger {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
     // With our getter / setter
     internal var _value: Int32 = 0

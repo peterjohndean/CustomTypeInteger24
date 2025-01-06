@@ -18,7 +18,16 @@
  */
 
 @frozen
-public struct UInt24: AdditiveArithmetic, BinaryInteger, Comparable, CustomStringConvertible, ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral, FixedWidthInteger, Numeric, UnsignedInteger {
+public struct UInt24:
+    AdditiveArithmetic,
+        BinaryInteger,
+        Comparable,
+        CustomStringConvertible,
+        ExpressibleByFloatLiteral,
+        ExpressibleByIntegerLiteral,
+        FixedWidthInteger,
+        Numeric,
+        UnsignedInteger {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
     // With our getter / setter
     internal var _value: UInt32 = 0

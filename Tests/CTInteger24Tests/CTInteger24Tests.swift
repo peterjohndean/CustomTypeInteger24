@@ -22,6 +22,27 @@ import Foundation
 
 @testable import CTInteger24
 
+extension FixedWidthInteger {
+    var binaryString: String {
+        var result: [String] = []
+        for i in 0..<(Self.bitWidth / 8) {
+            let byte = UInt8(truncatingIfNeeded: self >> (i * 8))
+            let byteString = String(byte, radix: 2)
+            let padding = String(repeating: "0",
+                                 count: 8 - byteString.count)
+            result.append(padding + byteString)
+        }
+        return "0b" + result.reversed().joined(separator: "_")
+    }
+}
+
+@Test func q0() async throws {
+    print(Int24.min.binaryString)
+    print(Int24.max.binaryString)
+    
+    print((101 as UInt24).binaryString)
+}
+
 @Test func quickie() async throws {
     
     var a0:Int24 = Int24(1234 + 1)
