@@ -23,28 +23,24 @@ extension Int24 {
     }
     
     public func addingReportingOverflow(_ rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
-//        let result = self.value + rhs.value
-//        guard result >= Int24.minInt && result <= Int24.maxInt else {
-//            return (Self(0), true)  // Overflow
-//        }
-//        return (Self(result), false)
         let result = (self.value &+ rhs.value) & Int24.maskInt
+//        let overflow =
+//        (/* Before */ (self.value & Int24.signedMaskInt) == (rhs.value & Int24.signedMaskInt)) &&
+//        (/* After */  (self.value & Int24.signedMaskInt) != (result & Int24.signedMaskInt))
         let overflow =
-        ((self.value & Int24.signedMaskInt) == (rhs.value & Int24.signedMaskInt)) &&
-        ((self.value & Int24.signedMaskInt) != (result & Int24.signedMaskInt))
+        ((self.value ^ rhs.value) & Int24.signedMaskInt == 0) &&    // Same sign operands
+        ((self.value ^ result) & Int24.signedMaskInt != 0)          // Different sign result
         return (Int24((result ^ Int24.signedMaskInt) - Int24.signedMaskInt), overflow)
     }
     
     public func subtractingReportingOverflow(_ rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
-//        let result = self.value &- rhs.value
-//        guard result >= Int24.minInt && result <= Int24.maxInt else {
-//            return (Self(0), true)  // Overflow
-//        }
-//        return (Self(result), false)
-        let result = (self.value - rhs.value) & Int24.maskInt
+        let result = (self.value &- rhs.value) & Int24.maskInt
+//        let overflow =
+//        (/* Before */ (self.value & Int24.signedMaskInt) != (rhs.value & Int24.signedMaskInt)) &&
+//        (/* After */  (self.value & Int24.signedMaskInt) != (result & Int24.signedMaskInt))
         let overflow =
-        ((self.value & Int24.signedMaskInt) != (rhs.value & Int24.signedMaskInt)) &&
-        ((self.value & Int24.signedMaskInt) != (result & Int24.signedMaskInt))
+        (/* Before */ (self.value ^ rhs.value) & Int24.signedMaskInt != 0) &&   // Different sign operands
+        (/* After */  (self.value ^ result) & Int24.signedMaskInt != 0)         // Different sign result
         return (Int24((result ^ Int24.signedMaskInt) - Int24.signedMaskInt), overflow)
     }
     
