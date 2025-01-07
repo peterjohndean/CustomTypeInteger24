@@ -28,8 +28,8 @@ extension Int24 {
 //        (/* Before */ (self.value & Int24.signedMaskInt) == (rhs.value & Int24.signedMaskInt)) &&
 //        (/* After */  (self.value & Int24.signedMaskInt) != (result & Int24.signedMaskInt))
         let overflow =
-        ((self.value ^ rhs.value) & Int24.signedMaskInt == 0) &&    // Same sign operands
-        ((self.value ^ result) & Int24.signedMaskInt != 0)          // Different sign result
+        (/* Before */ (self.value ^ rhs.value) & Int24.signedMaskInt == 0) &&    // Same sign operands
+        (/* After */  (self.value ^ result) & Int24.signedMaskInt != 0)          // Different sign result
         return (Int24((result ^ Int24.signedMaskInt) - Int24.signedMaskInt), overflow)
     }
     
@@ -49,18 +49,24 @@ extension Int24 {
         guard result >= Int24.minInt && result <= Int24.maxInt else {
             return (Self(0), true)  // Overflow
         }
-        return (Self(result), false)
+        return (Int24(result), false)
     }
     
     public func dividedReportingOverflow(by rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
-        guard rhs != 0 else {
-            return (Self(0), true)  // Division by zero
+        guard rhs.value != 0 else {
+            return (Int24(0), true)  // Division by zero
         }
-        let result = self.value / rhs.value
-        guard result >= Int24.minInt && result <= Int24.maxInt else {
-            return (Self(0), true)  // Overflow
-        }
-        return (Self(result), false)
+//        let result = self.value / rhs.value
+//        guard result >= Int24.minInt && result <= Int24.maxInt else {
+//            return (Int24(0), true)  // Overflow
+//        }
+//        return (Int24(result), false)
+//        
+        
+        let result = (self.value / rhs.value) & Int24.maskInt
+        let overflow = (self.value & Int24.minInt == Int24.minInt) && (rhs.value == -1) // Bitwise check for INT_MIN / -1 overflow
+        
+        return (Int24((result ^ Int24.signedMaskInt) - Int24.signedMaskInt), overflow)
     }
     
     public func remainderReportingOverflow(dividingBy rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
@@ -72,14 +78,18 @@ extension Int24 {
     }
     
     public func dividingFullWidth(_ dividend: (high: Int24, low: Int24.Magnitude)) -> (quotient: Int24, remainder: Int24) {
-        let fullValue = (Int64(dividend.high.value) << 32) | Int64(dividend.low)
+        let fullValue = (Int64(dividend.high.value) << 24) | Int64(dividend.low.value)
         let divisor = Int64(self.value)
         
         let quotient = fullValue / divisor
         let remainder = fullValue % divisor
         
+        // Ensure quotient and remainder are within the Int24 bounds
         guard quotient >= Int24.minInt && quotient <= Int24.maxInt else {
             fatalError("Overflow occurred during full-width division")
+        }
+        guard remainder >= Int24.minInt && remainder <= Int24.maxInt else {
+            fatalError("Overflow occurred during remainder calculation")
         }
         
         return (Self(quotient), Self(remainder))
