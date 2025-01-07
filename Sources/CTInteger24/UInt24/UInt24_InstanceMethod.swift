@@ -23,23 +23,29 @@ extension UInt24 {
     }
     
     public func addingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-        let result = self.value + rhs.value
-        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-            return (Self(0), true)  // Overflow
-        }
-        return (Self(result), false)
+//        let result = self.value + rhs.value
+//        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
+//            return (Self(0), true)  // Overflow
+//        }
+//        return (Self(result), false)
+        let result = (self.value &+ rhs.value) & UInt24.maskInt
+        let overflow = self.value > UInt24.maxInt - rhs.value
+        return (UInt24(result), overflow)
     }
     
     public func subtractingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-        guard self.value >= rhs.value else {
-            return (Self(0), true)  // Overflow
-        }
-        
-        let result = self.value - rhs.value
-        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-            return (Self(0), true)  // Overflow
-        }
-        return (Self(result), false)
+//        guard self.value >= rhs.value else {
+//            return (Self(0), true)  // Overflow
+//        }
+//        
+//        let result = self.value - rhs.value
+//        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
+//            return (Self(0), true)  // Overflow
+//        }
+//        return (Self(result), false)
+        let result = (self.value &- rhs.value) & UInt24.maskInt
+        let overflow = self.value < rhs.value
+        return (UInt24(result), overflow)
     }
     
     public func multipliedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
