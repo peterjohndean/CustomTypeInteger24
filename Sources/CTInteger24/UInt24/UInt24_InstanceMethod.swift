@@ -23,70 +23,64 @@ extension UInt24 {
     }
     
     public func addingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-//        let result = self.value + rhs.value
-//        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-//            return (Self(0), true)  // Overflow
-//        }
-//        return (Self(result), false)
         let result = (self.value &+ rhs.value) & UInt24.maskInt
         let overflow = self.value > UInt24.maxInt - rhs.value
         return (UInt24(result), overflow)
     }
     
     public func subtractingReportingOverflow(_ rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-//        guard self.value >= rhs.value else {
-//            return (Self(0), true)  // Overflow
-//        }
-//        
-//        let result = self.value - rhs.value
-//        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-//            return (Self(0), true)  // Overflow
-//        }
-//        return (Self(result), false)
         let result = (self.value &- rhs.value) & UInt24.maskInt
         let overflow = self.value < rhs.value
         return (UInt24(result), overflow)
     }
     
     public func multipliedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-        let result = self.value * rhs.value
-        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-            return (Self(0), true)  // Overflow
+        let result = UInt64(self.value) * UInt64(rhs.value)
+        guard result <= UInt24.maxInt else {
+            return (UInt24(0), true)  // Overflow
         }
-        return (Self(result), false)
+        return (UInt24(result), false)
     }
     
     public func dividedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
+        /*
+         In unsigned arithmetic, the division operation cannot produce a result larger than the dividend.
+         Therefore, as long as the divisor is non-zero, the operation will never overflow, even when constrained to 24 bits.
+         */
         guard rhs != 0 else {
-            return (Self(0), true)  // Division by zero
+            return (UInt24(0), true)  // Division by zero
         }
         let result = self.value / rhs.value
-        guard result >= UInt24.minInt && result <= UInt24.maxInt else {
-            return (Self(0), true)  // Overflow
-        }
-        return (Self(result), false)
+        return (UInt24(result), false)
     }
     
     public func remainderReportingOverflow(dividingBy rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
+        /*
+         In unsigned arithmetic, the division operation cannot produce a result larger than the dividend.
+         Therefore, as long as the divisor is non-zero, the operation will never overflow, even when constrained to 24 bits.
+         */
         guard rhs != 0 else {
-            return (Self(0), true)  // Division by zero
+            return (UInt24(0), true)  // Division by zero
         }
         let result = self.value % rhs.value
-        return (Self(result), false)  // No overflow for remainder
+        return (UInt24(result), false)  // No overflow for remainder
     }
     
     public func dividingFullWidth(_ dividend: (high: UInt24, low: UInt24.Magnitude)) -> (quotient: UInt24, remainder: UInt24) {
-        let fullValue = (UInt64(dividend.high.value) << 32) | UInt64(dividend.low)
+        let fullValue = (UInt64(dividend.high.value) << UInt24.bitWidth) | UInt64(dividend.low)
         let divisor = UInt64(self.value)
         
         let quotient = fullValue / divisor
         let remainder = fullValue % divisor
         
-        guard quotient >= UInt24.minInt && quotient <= UInt24.maxInt else {
-            fatalError("Overflow occurred during full-width division")
+        guard quotient <= UInt24.maxInt else {
+            fatalError("Overflow occurred during full-width (quotient) division (\(quotient))")
+        }
+        guard remainder <= UInt24.maxInt else {
+            fatalError("Overflow occurred during remainder calculation (\(remainder))")
         }
         
-        return (Self(quotient), Self(remainder))
+        return (UInt24(quotient), UInt24(remainder))
     }
 
 }

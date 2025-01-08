@@ -21,7 +21,6 @@ import Testing
 
 @testable import CTInteger24
 
-
 struct Int24_OverflowTests {
     
     @Test
@@ -90,24 +89,33 @@ struct Int24_OverflowTests {
     }
     
     @Test
-    func testDividingFullWidth() {
+    func testDividingFullWidthNoOverflow() {
         let a = Int24(7)
         let high: Int24 = 0
         let low: UInt24 = 21
         
         let result = a.dividingFullWidth((high: high, low: low))
         
-        #expect(result.quotient == 3)  // Correct quotient
-        #expect(result.remainder == 0) // Correct remainder
+        #expect(result.quotient.value == 3)  // Correct quotient
+        #expect(result.remainder.value == 0) // Correct remainder
         
         let resultBig = Int24(10).dividingFullWidth(
             (
-                high: Int24(-10_000 >> 24),  // High part of the negative number
+                high: Int24(-10_000 >> Int24.bitWidth),  // High part of the negative number
                 low: UInt24(abs(-10_000 & Int24.maskInt))  // Low part of the number
             )
         )
         
         #expect(resultBig.quotient.value == -1_000)  // The expected result
         #expect(resultBig.remainder.value == 0)     // No remainder
+    }
+    
+    @Test
+    func testDividingFullWidthWithOverflow() {
+//        let a = Int24(7)
+//        let high = Int24(-100_000_000 >> Int24.bitWidth)
+//        let low = UInt24(abs(-100_000_000 & Int24.maskInt))
+//        
+//        let result = a.dividingFullWidth((high: high, low: low))
     }
 }

@@ -103,6 +103,13 @@ struct UInt24_ArthmeticsTests {
             let expected = UInt24(45)
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
+        
+        @Test("Remainder - Division by Zero")
+        func testRemainderDivisionByZero() {
+            let a = UInt24(12345)
+            let b = UInt24(0)
+//            _ = a % b
+        }
     }
 
     // MARK: Compound Operators
