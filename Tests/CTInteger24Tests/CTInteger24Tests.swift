@@ -38,6 +38,14 @@ extension FixedWidthInteger {
 
 
 @Test func q0() async throws {
+    let a0 = Int24(bitPattern: UInt24(UInt24.max))
+    #expect(a0.value == -1)
+    print(a0, a0.value, a0.valueRaw)
+    
+    let a1 = UInt24(bitPattern: Int24(Int24.min))
+    #expect(a1.value == 8388608)
+    print(a1, a1.value, a1.valueRaw)
+    
     print(Int24.min.binaryString)
     print(Int24.max.binaryString)
     

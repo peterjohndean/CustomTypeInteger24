@@ -29,11 +29,15 @@ extension Int24 {
         self.value = (truncatedBits ^ Int24.signedMaskInt) - Int24.signedMaskInt
     }
     
+    // MARK: Bit pattern
+    public init(bitPattern source: UInt24) {
+        _value = Int32(bitPattern: source._value)
+    }
+    
     // MARK: Initialisers for literal types.
     //i.e. let a: Int24 = 123456
     // or  let a: Int24 = -3.1415926
     public init(integerLiteral source: IntegerLiteralType) {
-//        self.init(source) // Call the `init<T: FixedWidthInteger>` initializer.
         precondition(
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."

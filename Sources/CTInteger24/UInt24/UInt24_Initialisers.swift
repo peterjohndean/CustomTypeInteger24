@@ -28,6 +28,11 @@ extension UInt24 {
         self.value = truncatedBits
     }
     
+    // MARK: Bit pattern
+    public init(bitPattern source: Int24) {
+        _value = UInt32(bitPattern: source._value)
+    }
+    
     // MARK: Initialisers for literal types.
     //i.e. let a: UInt24 = 123456
     // or  let a: UInt24 = -3.1415926
