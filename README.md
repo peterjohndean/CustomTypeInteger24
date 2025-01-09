@@ -50,3 +50,8 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 - Now comparable with both floating-point numbers and integers of other types, from both the left-hand side and right-hand side.
 - Minor optimizations.
 - Bug fixes for the bitwise shift operations.
+
+### v0.0.9 - Comparable between Int24 and UInt24
+- Making everthing comparable is challenging, but we finally got there.
+- Bug fixes.
+- Minor optimisations.

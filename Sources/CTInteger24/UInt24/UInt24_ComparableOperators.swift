@@ -29,6 +29,43 @@ extension UInt24 {
     }
 }
 
+// MARK: Comparable with Int24
+extension UInt24 {
+    // This ensures numeric literals like 0 are explicitly handled.
+    public static func == (lhs: UInt24, rhs: UInt) -> Bool {
+        lhs.value == rhs
+    }
+    
+    // This ensures numeric literals like 0 are explicitly handled.
+    public static func == (lhs: UInt24, rhs: Int) -> Bool {
+        lhs.value == UInt(rhs)
+    }
+    
+    public static func != (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value != rhs.value
+    }
+    
+    public static func == (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value == rhs.value
+    }
+    
+    public static func <= (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value <= rhs.value
+    }
+    
+    public static func < (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value < rhs.value
+    }
+    
+    public static func >= (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value >= rhs.value
+    }
+    
+    public static func > (lhs: UInt24, rhs: Int24) -> Bool {
+        lhs.value > rhs.value
+    }
+}
+
 // MARK: Comparable with FixedWidthInteger
 extension UInt24 {
     // MARK: UInt24 to Any FixedWidthInteger (e.g., Int, UInt, etc.)

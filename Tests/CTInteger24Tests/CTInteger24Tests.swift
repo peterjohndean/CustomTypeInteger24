@@ -107,7 +107,7 @@ func initialise_tests() async throws {
 //    #expect(b.description == "\(b)")
 //    
     #expect(Int24() == 0)
-//    #expect(UInt24() == 0)
+    #expect(UInt24() == 0)
 //    
     #expect("\(type(of: a))" == "Int24")
 //    #expect("\(type(of: b))" == "UInt24")
@@ -125,8 +125,7 @@ func initialise_tests() async throws {
 //    #expect(b3.value == Int24(432.123).value)
 }
 
-@Test("Comparable")
-func comparable_tests() async throws {
+@Test("Comparable") func comparable_tests() async throws {
     // When I added he Comparable protocol, it only required == and < operands.
     let a1: Int24 = 1
     let a2: Int24 = 2
@@ -153,22 +152,24 @@ func comparable_tests() async throws {
     // Other Interchangable operands of other types need to be included.
     #expect(UInt8(13) != a3)
     #expect(a3 != UInt8(13))
-    #expect(a3 <= UInt8(13))
+    #expect(a3 <= UInt16(13))
     #expect(UInt8(13) != b3)
     #expect(b3 != UInt8(13))
     #expect(b3 <= UInt16(13))
     
-//    #expect(a1 == b1)
-//    #expect(a1 < b2)
-//    #expect(a2 > b1)
-//    #expect(a1 <= b2)
-//    #expect(a2 >= b1)
-//    
-//    #expect(b1 == a1)
-//    #expect(b1 < a2)
-//    #expect(b2 > a1)
-//    #expect(b1 <= a2)
-//    #expect(b2 >= a1)
+    #expect(a1 == b1)
+    #expect(a1 < b2)
+    #expect(a2 > b1)
+    #expect(a1 <= b2)
+    #expect(a2 >= b1)
+    #expect(a2 != b1)
+//
+    #expect(b1 == a1)
+    #expect(b1 < a2)
+    #expect(b2 > a1)
+    #expect(b1 <= a2)
+    #expect(b2 >= a1)
+    #expect(b2 != a1)
 }
 
 @Test("AdditiveArithmetic")
