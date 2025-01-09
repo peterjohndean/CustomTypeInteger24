@@ -52,6 +52,6 @@ I will initially creating structured pairs, Int24 and UInt24, leading to a usabl
 - Bug fixes for the bitwise shift operations.
 
 ### v0.0.9 - Comparable between Int24 and UInt24
-- Making everthing comparable is challenging, but we finally got there.
-- Bug fixes.
-- Minor optimisations.
+- Achieving comparability across all aspects presents a significant challenge, but we have successfully overcome this obstacle.
+- Bug fixes
+- Minor optimizations
