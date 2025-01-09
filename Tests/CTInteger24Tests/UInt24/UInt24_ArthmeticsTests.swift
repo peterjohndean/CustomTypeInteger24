@@ -36,12 +36,12 @@ struct UInt24_ArthmeticsTests {
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
         
-        @Test("Addition - Overflow")
-        func testAdditionOverflow() {
-            let a = UInt24(UInt24.max)
-            let b = UInt24(1)
+//        @Test("Addition - Overflow")
+//        func testAdditionOverflow() {
+//            let a = UInt24(UInt24.max)
+//            let b = UInt24(1)
 //            _ = a + b // Uncomment to validate overflow
-        }
+//        }
         
         // MARK: - Subtraction
         @Test("Subtraction - No Underflow")
@@ -53,12 +53,12 @@ struct UInt24_ArthmeticsTests {
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
         
-        @Test("Subtraction - Underflow")
-        func testSubtractionUnderflow() {
-            let a = UInt24(0)
-            let b = UInt24(1)
+//        @Test("Subtraction - Underflow")
+//        func testSubtractionUnderflow() {
+//            let a = UInt24(0)
+//            let b = UInt24(1)
 //            _ = a - b // Uncomment to validate underflow
-        }
+//        }
         
         // MARK: - Multiplication
         @Test("Multiplication - No Overflow")
@@ -70,12 +70,12 @@ struct UInt24_ArthmeticsTests {
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
         
-        @Test("Multiplication - Overflow")
-        func testMultiplicationOverflow() {
-            let a = UInt24(UInt24.max / 2 + 1)
-            let b = UInt24(2)
+//        @Test("Multiplication - Overflow")
+//        func testMultiplicationOverflow() {
+//            let a = UInt24(UInt24.max / 2 + 1)
+//            let b = UInt24(2)
 //            _ = a * b // Uncomment to validate overflow
-        }
+//        }
         
         // MARK: - Division
         @Test("Division - No Division by Zero")
@@ -87,12 +87,12 @@ struct UInt24_ArthmeticsTests {
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
         
-        @Test("Division - Division by Zero")
-        func testDivisionByZero() {
-            let a = UInt24(12345)
-            let b = UInt24(0)
+//        @Test("Division - Division by Zero")
+//        func testDivisionByZero() {
+//            let a = UInt24(12345)
+//            let b = UInt24(0)
 //            _ = a / b // Uncomment to validate division by zero
-        }
+//        }
         
         // MARK: - Remainder
         @Test("Remainder - No Division by Zero")
@@ -104,12 +104,12 @@ struct UInt24_ArthmeticsTests {
             #expect(result == expected, "Expected \(expected), got \(result)")
         }
         
-        @Test("Remainder - Division by Zero")
-        func testRemainderDivisionByZero() {
-            let a = UInt24(12345)
-            let b = UInt24(0)
+//        @Test("Remainder - Division by Zero")
+//        func testRemainderDivisionByZero() {
+//            let a = UInt24(12345)
+//            let b = UInt24(0)
 //            _ = a % b
-        }
+//        }
     }
 
     // MARK: Compound Operators
@@ -125,12 +125,12 @@ struct UInt24_ArthmeticsTests {
             #expect(a == expected, "Expected \(expected), got \(a)")
         }
         
-        @Test("Addition Assignment - Overflow")
-        func testAdditionAssignmentOverflow() {
-            var a = UInt24(UInt24.max)
-            let b = UInt24(1)
+//        @Test("Addition Assignment - Overflow")
+//        func testAdditionAssignmentOverflow() {
+//            var a = UInt24(UInt24.max)
+//            let b = UInt24(1)
 //            a += b // Uncomment to validate overflow
-        }
+//        }
         
         // MARK: - Subtraction Assignment
         @Test("Subtraction Assignment - No Underflow")
@@ -142,12 +142,12 @@ struct UInt24_ArthmeticsTests {
             #expect(a == expected, "Expected \(expected), got \(a)")
         }
         
-        @Test("Subtraction Assignment - Underflow")
-        func testSubtractionAssignmentUnderflow() {
-            var a = UInt24(0)
-            let b = UInt24(1)
+//        @Test("Subtraction Assignment - Underflow")
+//        func testSubtractionAssignmentUnderflow() {
+//            var a = UInt24(0)
+//            let b = UInt24(1)
 //            a -= b // Uncomment to validate underflow
-        }
+//        }
     }
     
     // MARK: Bitwise Operators

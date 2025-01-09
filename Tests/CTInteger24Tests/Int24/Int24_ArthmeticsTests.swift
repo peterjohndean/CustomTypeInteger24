@@ -33,19 +33,19 @@ struct Int24_ArthmeticsTests {
         #expect(result == expected, "Expected \(expected), got \(result)")
     }
     
-    @Test("Addition - Positive Overflow")
-    func testAdditionPositiveOverflow() {
-        let a = Int24(Int24.max)
-        let b = Int24(1)
+//    @Test("Addition - Positive Overflow")
+//    func testAdditionPositiveOverflow() {
+//        let a = Int24(Int24.max)
+//        let b = Int24(1)
 //        _ = a + b
-    }
+//    }
     
-    @Test("Addition - Negative Overflow")
-    func testAdditionNegativeOverflow() {
-        let a = Int24(Int24.min)
-        let b = Int24(-1)
+//    @Test("Addition - Negative Overflow")
+//    func testAdditionNegativeOverflow() {
+//        let a = Int24(Int24.min)
+//        let b = Int24(-1)
 //        _ = a + b
-    }
+//    }
     
     @Test("Subtraction - No Overflow")
     func testSubtractionNoOverflow() {
@@ -56,19 +56,19 @@ struct Int24_ArthmeticsTests {
         #expect(result == expected, "Expected \(expected), got \(result)")
     }
     
-    @Test("Subtraction - Positive Overflow")
-    func testSubtractionPositiveOverflow() {
-        let a = Int24(Int24.max)
-        let b = Int24(-1)
+//    @Test("Subtraction - Positive Overflow")
+//    func testSubtractionPositiveOverflow() {
+//        let a = Int24(Int24.max)
+//        let b = Int24(-1)
 //        _ = a - b
-    }
+//    }
     
-    @Test("Subtraction - Negative Overflow")
-    func testSubtractionNegativeOverflow() {
-        let a = Int24(Int24.min)
-        let b = Int24(1)
+//    @Test("Subtraction - Negative Overflow")
+//    func testSubtractionNegativeOverflow() {
+//        let a = Int24(Int24.min)
+//        let b = Int24(1)
 //        _ = a - b
-    }
+//    }
     
     @Test("Multiplication - No Overflow")
     func testMultiplicationNoOverflow() {
@@ -79,21 +79,21 @@ struct Int24_ArthmeticsTests {
         #expect(result == expected, "Expected \(expected), got \(result)")
     }
     
-    @Test("Multiplication - Positive Overflow")
-    func testMultiplicationPositiveOverflow() {
-        let a = Int24(Int24.max / 2 + 1)
-        let b = Int24(2)
+//    @Test("Multiplication - Positive Overflow")
+//    func testMultiplicationPositiveOverflow() {
+//        let a = Int24(Int24.max / 2 + 1)
+//        let b = Int24(2)
 //        _ = a * b
-    }
+//    }
     
-    @Test("Multiplication - Negative Overflow")
-    func testMultiplicationNegativeOverflow() {
-        let a = Int24(Int24.min / 2)
-        let b = Int24(3)
+//    @Test("Multiplication - Negative Overflow")
+//    func testMultiplicationNegativeOverflow() {
+//        let a = Int24(Int24.min / 2)
+//        let b = Int24(3)
 //        _ = a * b
-//        _ = Int24(Int24.min / 2) * Int24(3)
-//        _ = Int32(Int32.min / 2) * Int32(3)
-    }
+////        _ = Int24(Int24.min / 2) * Int24(3)
+////        _ = Int32(Int32.min / 2) * Int32(3)
+//    }
     
     @Test("Division - No Overflow")
     func testDivisionNoOverflow() {
@@ -104,12 +104,12 @@ struct Int24_ArthmeticsTests {
         #expect(result == expected, "Expected \(expected), got \(result)")
     }
     
-    @Test("Division - Division by Zero")
-    func testDivisionByZero() {
-        let a = Int24(12345)
-        let b = Int24(0)
+//    @Test("Division - Division by Zero")
+//    func testDivisionByZero() {
+//        let a = Int24(12345)
+//        let b = Int24(0)
 //        _ = a / b
-    }
+//    }
     
     @Test("Remainder - No Overflow")
     func testRemainderNoOverflow() {
@@ -120,13 +120,13 @@ struct Int24_ArthmeticsTests {
         #expect(result == expected, "Expected \(expected), got \(result)")
     }
     
-    @Test("Remainder - Division by Zero")
-    func testRemainderDivisionByZero() {
-        let a = Int24(12345)
-        let b = Int24(0)
+//    @Test("Remainder - Division by Zero")
+//    func testRemainderDivisionByZero() {
+//        let a = Int24(12345)
+//        let b = Int24(0)
 //        _ = a % b
-//        _ = Int24(Int24.min) % Int24(-1)
-    }
+////        _ = Int24(Int24.min) % Int24(-1)
+//    }
 
     // MARK: Compound Operators
     @Test("Addition Assignment - No Overflow")
@@ -138,12 +138,12 @@ struct Int24_ArthmeticsTests {
         #expect(a == expected, "Expected \(expected), got \(a)")
     }
     
-    @Test("Addition Assignment - Overflow")
-    func testAdditionAssignmentOverflow() {
-        var a = Int24(Int24.max)
-        let b = Int24(1)
+//    @Test("Addition Assignment - Overflow")
+//    func testAdditionAssignmentOverflow() {
+//        var a = Int24(Int24.max)
+//        let b = Int24(1)
 //        a += b
-    }
+//    }
     
     @Test("Subtraction Assignment - No Overflow")
     func testSubtractionAssignmentNoOverflow() {
@@ -154,13 +154,13 @@ struct Int24_ArthmeticsTests {
         #expect(a == expected, "Expected \(expected), got \(a)")
     }
     
-    @Test("Subtraction Assignment - Overflow")
-    func testSubtractionAssignmentOverflow() {
-        var a = Int24(Int24.min)
-        let b = Int24(1)
-//        debugPrint(a.value, a.hex, a.value.toFormattedHexString, b.value, b.value.toFormattedHexString)
+//    @Test("Subtraction Assignment - Overflow")
+//    func testSubtractionAssignmentOverflow() {
+//        var a = Int24(Int24.min)
+//        let b = Int24(1)
+////        debugPrint(a.value, a.hex, a.value.toFormattedHexString, b.value, b.value.toFormattedHexString)
 //        a -= b
-    }
+//    }
     
     @Test("Multiplication Assignment - No Overflow")
     func testMultiplicationAssignmentNoOverflow() {
@@ -171,12 +171,12 @@ struct Int24_ArthmeticsTests {
         #expect(a == expected, "Expected \(expected), got \(a)")
     }
     
-    @Test("Multiplication Assignment - Overflow")
-    func testMultiplicationAssignmentOverflow() {
-        var a = Int24(Int24.max / 2 + 1)
-        let b = Int24(2)
+//    @Test("Multiplication Assignment - Overflow")
+//    func testMultiplicationAssignmentOverflow() {
+//        var a = Int24(Int24.max / 2 + 1)
+//        let b = Int24(2)
 //        a *= b
-    }
+//    }
     
     @Test("Division Assignment - No Overflow")
     func testDivisionAssignmentNoOverflow() {
@@ -187,12 +187,12 @@ struct Int24_ArthmeticsTests {
         #expect(a == expected, "Expected \(expected), got \(a)")
     }
     
-    @Test("Division Assignment - Division by Zero")
-    func testDivisionAssignmentDivisionByZero() {
-        var a = Int24(12345)
-        let b = Int24(0)
+//    @Test("Division Assignment - Division by Zero")
+//    func testDivisionAssignmentDivisionByZero() {
+//        var a = Int24(12345)
+//        let b = Int24(0)
 //        a /= b
-    }
+//    }
     
     @Test("Remainder Assignment - No Overflow")
     func testRemainderAssignmentNoOverflow() {
@@ -203,12 +203,12 @@ struct Int24_ArthmeticsTests {
         #expect(a == expected, "Expected \(expected), got \(a)")
     }
     
-    @Test("Remainder Assignment - Division by Zero")
-    func testRemainderAssignmentDivisionByZero() {
-        var a = Int24(12345)
-        let b = Int24(0)
+//    @Test("Remainder Assignment - Division by Zero")
+//    func testRemainderAssignmentDivisionByZero() {
+//        var a = Int24(12345)
+//        let b = Int24(0)
 //        a %= b
-    }
+//    }
     
     // MARK: Bitwise Operators
     @Test("Bitwise AND")

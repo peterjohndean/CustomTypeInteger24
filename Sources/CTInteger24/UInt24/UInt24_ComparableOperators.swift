@@ -17,16 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// MARK: Comparable with UInt24
 extension UInt24 {
     // MARK: Minimum required
     public static func == (lhs: UInt24, rhs: UInt24) -> Bool {
         lhs.value == rhs.value
     }
-
+    
     public static func < (lhs: UInt24, rhs: UInt24) -> Bool {
         lhs.value < rhs.value
     }
-    
+}
+
+// MARK: Comparable with FixedWidthInteger
+extension UInt24 {
     // MARK: UInt24 to Any FixedWidthInteger (e.g., Int, UInt, etc.)
     public static func >(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
         return lhs.value > rhs
@@ -74,7 +78,10 @@ extension UInt24 {
     public static func !=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
         return lhs != rhs.value
     }
-    
+}
+
+// MARK: Comparable with BinaryFloatingPoint
+extension UInt24 {
     // MARK: UInt24 to Any BinaryFloatingPoint (e.g., Float16, Float32, etc.)
     public static func ><T: BinaryFloatingPoint>(lhs: UInt24, rhs: T) -> Bool {
         return T(lhs.value) > rhs

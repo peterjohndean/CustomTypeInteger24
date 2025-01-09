@@ -17,16 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// MARK: Comparable with Int24
 extension Int24 {
     // MARK: Minimum required
     public static func == (lhs: Int24, rhs: Int24) -> Bool {
         lhs.value == rhs.value
     }
-
+    
     public static func < (lhs: Int24, rhs: Int24) -> Bool {
         lhs.value < rhs.value
     }
-    
+}
+
+// MARK: Comparable with FixedWidthInteger
+extension Int24 {
     // MARK: Int24 to Any FixedWidthInteger (e.g., Int, UInt, etc.)
     public static func >(lhs: Int24, rhs: some FixedWidthInteger) -> Bool {
         return lhs.value > rhs
@@ -44,7 +48,7 @@ extension Int24 {
         return lhs.value <= rhs
     }
     
-    public static func ==(lhs: Int24, rhs: some FixedWidthInteger) -> Bool {
+    public static func ==<T: FixedWidthInteger>(lhs: Int24, rhs: T) -> Bool {
         return lhs.value == rhs
     }
     
@@ -74,7 +78,10 @@ extension Int24 {
     public static func !=(lhs: some FixedWidthInteger, rhs: Int24) -> Bool {
         return lhs != rhs.value
     }
-    
+}
+
+// MARK: Comparable with BinaryFloatingPoint
+extension Int24 {
     // MARK: Int24 to Any BinaryFloatingPoint (e.g., Float16, Float32, etc.)
     public static func ><T: BinaryFloatingPoint>(lhs: Int24, rhs: T) -> Bool {
         return T(lhs.value) > rhs
