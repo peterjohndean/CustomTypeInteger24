@@ -30,7 +30,7 @@ public struct UInt24:
         UnsignedInteger {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
     // With our getter / setter
-    internal var _value: UInt32 = 0
+    internal var _value: UInt32 //= 0
     public internal(set) var value: UInt32 {
         get {
             return self._value

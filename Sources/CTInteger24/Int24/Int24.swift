@@ -61,10 +61,10 @@ public struct Int24:
         ExpressibleByIntegerLiteral,
         FixedWidthInteger,
         Numeric,
-        SignedInteger {
+    SignedInteger {
     // Place to hold our 24-bit value. We use the Swift.Int32 to help us out.
     // With our getter / setter
-    internal var _value: Int32 = 0
+    internal var _value: Int32 // = 0
     public internal(set) var value: Int32 {
         get {
             // Ensure the returned Int32 is properly representing our value
@@ -103,5 +103,4 @@ public struct Int24:
     public static let min: Int24 = Int24(minInt)    // Minimum value
     public static let max: Int24 = Int24(maxInt)    // Maximum value
     public static let bitWidth: Int = 24            // 24-bits
-
 }

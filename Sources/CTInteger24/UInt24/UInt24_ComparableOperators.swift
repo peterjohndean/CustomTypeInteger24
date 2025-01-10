@@ -66,53 +66,53 @@ extension UInt24 {
     }
 }
 
-// MARK: Comparable with FixedWidthInteger
+// MARK: Comparable with BinaryInteger
 extension UInt24 {
-    // MARK: UInt24 to Any FixedWidthInteger (e.g., Int, UInt, etc.)
-    public static func >(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    // MARK: UInt24 to Any BinaryInteger (e.g., Int, UInt, etc.)
+    public static func >(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value > rhs
     }
     
-    public static func <(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    public static func <(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value < rhs
     }
     
-    public static func >=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    public static func >=(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value >= rhs
     }
     
-    public static func <=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    public static func <=(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value <= rhs
     }
     
-    public static func ==(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    public static func ==(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value == rhs
     }
     
-    public static func !=(lhs: UInt24, rhs: some FixedWidthInteger) -> Bool {
+    public static func !=(lhs: UInt24, rhs: some BinaryInteger) -> Bool {
         return lhs.value != rhs
     }
     
-    // MARK: Any FixedWidthInteger (e.g., Int, UInt, etc.) to UInt24
-    public static func >(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    // MARK: Any BinaryInteger (e.g., Int, UInt, etc.) to UInt24
+    public static func >(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs > rhs.value    }
     
-    public static func <(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    public static func <(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs < rhs.value    }
     
-    public static func >=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    public static func >=(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs >= rhs.value
     }
     
-    public static func <=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    public static func <=(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs <= rhs.value
     }
     
-    public static func ==(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    public static func ==(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs == rhs.value
     }
     
-    public static func !=(lhs: some FixedWidthInteger, rhs: UInt24) -> Bool {
+    public static func !=(lhs: some BinaryInteger, rhs: UInt24) -> Bool {
         return lhs != rhs.value
     }
 }

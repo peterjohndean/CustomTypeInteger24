@@ -19,6 +19,10 @@
 
 extension Int24 {
     // MARK: Default
+    public init() {
+        _value = Int32.zero
+    }
+    
     public init(_ source: Int24) {
         _value = source._value
     }
@@ -26,12 +30,12 @@ extension Int24 {
     public init(_truncatingBits bits: UInt) {
         let truncatedBits = Int32(bits & UInt(Int24.maskInt))
 //        self.value = (truncatedBits & Int24.signedMaskInt) != 0 ? (truncatedBits | ~Int24.signedMaskInt) : truncatedBits
-        self.value = (truncatedBits ^ Int24.signedMaskInt) - Int24.signedMaskInt
+        _value = ((truncatedBits ^ Int24.signedMaskInt) - Int24.signedMaskInt) & Int24.maskInt
     }
     
     // MARK: Bit pattern
     public init(bitPattern source: UInt24) {
-        _value = Int32(bitPattern: source._value)
+        _value = Int32(bitPattern: source._value) & Int24.maskInt
     }
     
     // MARK: Initialisers for literal types.
@@ -42,7 +46,7 @@ extension Int24 {
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
         )
-        self.value = Int32(source)
+        self._value = Int32(source) & Int24.maskInt
     }
     
     public init(floatLiteral source: FloatLiteralType) {
@@ -50,13 +54,13 @@ extension Int24 {
     }
 
     // MARK: Initialisers for FixedWidthInteger
-    public init<T: FixedWidthInteger>(_ source: T) {
-        precondition(
-            source >= Int24.minInt && source <= Int24.maxInt,
-            "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
-        )
-        self.value = Int32(source)
-    }
+//    public init<T: FixedWidthInteger>(_ source: T) {
+//        precondition(
+//            source >= Int24.minInt && source <= Int24.maxInt,
+//            "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
+//        )
+//        self.value = Int32(source)
+//    }
     
     // MARK: Initialisers for BinaryInteger
     public init<T: BinaryInteger>(_ source: T) {
@@ -64,12 +68,12 @@ extension Int24 {
             source >= Int24.minInt && source <= Int24.maxInt,
             "\(source) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
         )
-        self.value = Int32(source)
+        _value = Int32(source) & Int24.maskInt
     }
     
     public init?<T>(exactly source: T) where T: BinaryInteger {
         guard source >= Int24.minInt && source <= Int24.maxInt else { return nil }
-        self.value = Int32(source)
+        _value = Int32(source) & Int24.maskInt
     }
     
     public init<T>(truncatingIfNeeded source: T) where T: BinaryInteger {
@@ -77,7 +81,7 @@ extension Int24 {
         let masked = Int32(source & T(Int24.maskInt))
         
         // Adjust for signed range
-        self.value = masked > Int24.maxInt ? masked - Int32(Int24.maskInt + 1) : masked
+        _value = (masked > Int24.maxInt ? masked - Int32(Int24.maskInt + 1) : masked) & Int24.maskInt
     }
     
     public init<T>(clamping source: T) where T: BinaryInteger {
@@ -89,7 +93,7 @@ extension Int24 {
         } else {
             clampedValue = Int32(source)
         }
-        self.value = clampedValue
+        _value = clampedValue & Int24.maskInt
     }
     
     // MARK: Initialisers for BinaryFloatingPoint
@@ -99,7 +103,7 @@ extension Int24 {
             roundedValue >= Int24.minInt && roundedValue <= Int24.maxInt,
             "\(roundedValue) is outside the representable range of Int24 (\(Int24.min)...\(Int24.max))."
         )
-        self.value = roundedValue
+        _value = roundedValue & Int24.maskInt
     }
     
     public init?<T>(exactly source: T) where T: BinaryFloatingPoint {
@@ -107,6 +111,6 @@ extension Int24 {
               integerValue >= Int24.minInt && integerValue <= Int24.maxInt else {
             return nil
         }
-        self.value = integerValue
+        _value = integerValue & Int24.maskInt
     }
 }

@@ -38,6 +38,10 @@ extension FixedWidthInteger {
 
 
 @Test func q0() async throws {
+    let n0 = Int24(5).distance(to: Int24(-12))
+    let n1 = Int24(5).advanced(by: -12)
+    debugPrint(n0, n1)
+    
     let a0 = Int24(bitPattern: UInt24(UInt24.max))
     #expect(a0.value == -1)
     print(a0, a0.value, a0.valueRaw)
