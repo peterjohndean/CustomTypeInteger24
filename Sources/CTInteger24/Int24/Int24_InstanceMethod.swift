@@ -51,11 +51,16 @@ extension Int24 {
             return (Int24(0), false)    // Multiplication by zero
         }
         
-        if ((lhs > 0 && rhs > 0 && lhs > Int24.maxInt / rhs) || // Positive * Positive
-            (lhs < 0 && rhs < 0 && lhs < Int24.maxInt / rhs) || // Negative * Negative
-            (lhs > 0 && rhs < 0 && lhs > Int24.minInt / rhs) || // Positive * Negative
-            (lhs < 0 && rhs > 0 && lhs < Int24.minInt / rhs)) { // Negative * Positive
-            return (Int24(0), true) // Overflow
+        if (lhs ^ rhs) >= 0 { // Same signs
+            if ((lhs > 0 && rhs > 0 && lhs > Int24.maxInt / rhs) || // Positive * Positive
+                (lhs < 0 && rhs < 0 && lhs < Int24.maxInt / rhs)) { // Negative * Negative
+                return (Int24(0), true) // Overflow
+            }
+        } else { // Opposite signs
+            if ((lhs > 0 && rhs < 0 && lhs > Int24.minInt / rhs) || // Positive * Negative
+                (lhs < 0 && rhs > 0 && lhs < Int24.minInt / rhs)) { // Negative * Positive
+                return (Int24(0), true) // Overflow
+            }
         }
         
         return (Int24((lhs * rhs)), false)
