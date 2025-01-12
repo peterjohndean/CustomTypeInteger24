@@ -65,6 +65,8 @@ struct Int24_OverflowTests {
         
         let neg = Int24(-1)
         #expect(a.multipliedReportingOverflow(by: neg).partialValue == Int24(-Int24.maxInt))
+        
+        #expect(Int24(Int24.min).multipliedReportingOverflow(by: Int24(-1)).overflow == true)
     }
     
     @Test

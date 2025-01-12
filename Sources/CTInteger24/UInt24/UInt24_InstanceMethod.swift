@@ -35,11 +35,23 @@ extension UInt24 {
     }
     
     public func multipliedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
-        let result = UInt64(self.value) * UInt64(rhs.value)
-        guard result <= UInt24.maxInt else {
-            return (UInt24(0), true)  // Overflow
+        let lhs = self.value
+        let rhs = rhs.value
+        
+        guard lhs != 0 && rhs != 0 else {
+            return (UInt24(0), false)    // Multiplication by zero
         }
-        return (UInt24(result), false)
+        
+        if lhs > UInt24.maxInt / rhs {
+            return (UInt24(0), true) // Overflow
+        }
+        
+        return (UInt24(lhs * rhs), false)
+//        let result = UInt64(self.value) * UInt64(rhs.value)
+//        guard result <= UInt24.maxInt else {
+//            return (UInt24(0), true)  // Overflow
+//        }
+//        return (UInt24(result), false)
     }
     
     public func dividedReportingOverflow(by rhs: UInt24) -> (partialValue: UInt24, overflow: Bool) {
@@ -82,5 +94,4 @@ extension UInt24 {
         
         return (UInt24(quotient), UInt24(remainder))
     }
-
 }

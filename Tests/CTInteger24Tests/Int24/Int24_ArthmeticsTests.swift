@@ -91,7 +91,7 @@ struct Int24_ArthmeticsTests {
 //        let a = Int24(Int24.min / 2)
 //        let b = Int24(3)
 //        _ = a * b
-////        _ = Int24(Int24.min / 2) * Int24(3)
+////        _ = Int24(Int24.min) * Int24(-1)
 ////        _ = Int32(Int32.min / 2) * Int32(3)
 //    }
     

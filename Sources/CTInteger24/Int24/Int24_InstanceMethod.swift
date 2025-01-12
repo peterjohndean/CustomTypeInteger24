@@ -39,11 +39,26 @@ extension Int24 {
     }
     
     public func multipliedReportingOverflow(by rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
-        let result = Int64(self.value) * Int64(rhs.value)
-        guard result >= Int24.minInt && result <= Int24.maxInt else {
-            return (Int24(0), true)  // Overflow
+//        let result = Int64(self.value) * Int64(rhs.value)
+//        guard result >= Int24.minInt && result <= Int24.maxInt else {
+//            return (Int24(0), true)  // Overflow
+//        }
+//        return (Int24(result), false)
+        let lhs = self.value
+        let rhs = rhs.value
+        
+        guard lhs != 0 && rhs != 0 else {
+            return (Int24(0), false)    // Multiplication by zero
         }
-        return (Int24(result), false)
+        
+        if ((lhs > 0 && rhs > 0 && lhs > Int24.maxInt / rhs) || // Positive * Positive
+            (lhs < 0 && rhs < 0 && lhs < Int24.maxInt / rhs) || // Negative * Negative
+            (lhs > 0 && rhs < 0 && lhs > Int24.minInt / rhs) || // Positive * Negative
+            (lhs < 0 && rhs > 0 && lhs < Int24.minInt / rhs)) { // Negative * Positive
+            return (Int24(0), true) // Overflow
+        }
+        
+        return (Int24((lhs * rhs)), false)
     }
 
     public func dividedReportingOverflow(by rhs: Int24) -> (partialValue: Int24, overflow: Bool) {
@@ -87,5 +102,4 @@ extension Int24 {
         
         return (Int24(quotient), Int24(remainder))
     }
-
 }
