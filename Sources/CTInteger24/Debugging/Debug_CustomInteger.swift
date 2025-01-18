@@ -110,26 +110,32 @@ extension CustomInteger {
         return shift >= adjustedBitWidth /* Shifts >= bitWidth */ || (value >> (T(adjustedBitWidth) - shift)) != 0 /* Shifts < bitWidth */
     }
     
+    /// - Returns: true, if lhs `+` rhs will result in an arithmetic overflow.
     func additionReportOverflow<T: BinaryInteger>(lhs: T, rhs: T) -> Bool {
         if T.isSigned {
             let lhs = Int(lhs)
             let rhs = Int(rhs)
             
             // Overflow logic for signed integers
-            if (lhs ^ rhs) >= 0 /* lhs & rhs have same signs */ {
-                if lhs < ranges.signed.lowerBound - rhs {
-                    return true // Negative overflow (lhs < min - rhs)
-                } else if lhs > ranges.signed.upperBound - rhs {
-                    return true // Positive overflow (lhs > max - rhs)
+            if (lhs ^ rhs) >= 0 { // Same signs
+                if lhs & masks.signed != 0 {
+                    if rhs < 0
+                        ? (lhs < ranges.signed.lowerBound - rhs)    // Negative overflow
+                        : (lhs > ranges.signed.upperBound - rhs) {  // Positive overflow
+                        return true
+                    }
                 }
             }
+            
             return false // No overflow
+            
         } else {
             // Overflow logic for unsigned integers
             return (rhs > (T(ranges.unsigned.upperBound) - lhs)) // rhs > (max - lhs)
         }
     }
     
+    /// - Returns: true, if lhs `-` rhs will result in an arithmetic overflow.
     func subtractionReportOverflow<T: BinaryInteger>(lhs: T, rhs: T) -> Bool {
         if T.isSigned {
             let lhs = Int(lhs)
