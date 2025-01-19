@@ -113,21 +113,24 @@ extension CustomInteger {
     /// - Returns: true, if lhs `+` rhs will result in an arithmetic overflow.
     func additionReportOverflow<T: BinaryInteger>(lhs: T, rhs: T) -> Bool {
         if T.isSigned {
-            let lhs = Int(lhs)
+            guard (lhs ^ rhs) >= 0 else {
+                return false // Opposite signs, no overflow
+            }
+            
             let rhs = Int(rhs)
             
             // Overflow logic for signed integers
-            if (lhs ^ rhs) >= 0 { // Same signs
-                if lhs & masks.signed != 0 {
-                    if rhs < 0
-                        ? (lhs < ranges.signed.lowerBound - rhs)    // Negative overflow
-                        : (lhs > ranges.signed.upperBound - rhs) {  // Positive overflow
-                        return true
-                    }
-                }
+            // Check for positive overflow without addition
+            if lhs > 0 && rhs > 0 && lhs > ranges.signed.upperBound - rhs {
+                return true
+            }
+            // Check for negative overflow without addition
+            if lhs < 0 && rhs < 0 && lhs < ranges.signed.lowerBound - rhs {
+                return true
             }
             
-            return false // No overflow
+            // No overflow
+            return false
             
         } else {
             // Overflow logic for unsigned integers

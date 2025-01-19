@@ -21,7 +21,7 @@ import Testing
 
 @testable import CTInteger24
 
-struct Debug_Tests {
+struct Debug_CustomInteger_Tests {
 
     @Test func leftShiftOverflow_Tests() async throws {
         if let a = CustomInteger(for: 32) {
